@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,9 +20,10 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&display=swap" rel="stylesheet" />
       </head>
       <body
-        className={`font-geist antialiased`}
+        className={`font-geist antialiased max-w-4xl mx-auto px-4 pt-8 pb-4 bg-[#FEFEFF]`}
       >
         {children}
+        <Footer />
       </body>
     </html>
   );
