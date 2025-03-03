@@ -6,11 +6,12 @@ export default function Achievements() {
         <>
             <Navbar page="achievements" />
             <div className="mt-20">
+                <h1 className="text-2xl text-gray-900 font-bold">My Achievements!</h1>
                 <div className="mt-4 leading-7 text-neutral-700">
                     <ul className="pl-5">
                         {achievements.map((d, idx) => (
                             <li key={idx} className="pl-1 mb-6" style={{ listStyle: '"' + d.listStyle + '"' }}>
-                                <h1>{d.name}</h1>
+                                <h1 className="text-gray-900">{d.name}</h1>
                                 <ul className="list-disc list-inside text-neutral-500">
                                     {d.tasks.map((t, idxt) => (
                                         <li key={idxt}>{t}</li>
