@@ -1,11 +1,34 @@
+"use client"
+
 import Button from "@/components/button";
 import Input from "@/components/input";
 import Navbar from "@/components/navbar";
 import Textarea from "@/components/textarea";
 import { IconBrandGithub, IconBrandInstagram, IconBrandLinkedin, IconBrandTelegram, IconMail } from "@tabler/icons-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  let [contrib, setContrib] = useState<string>("fetching...");
+  let [GHLang, setGHLang] = useState<string>("fetching...");
+
+  useEffect(() => {
+    const fetchStats = async() => {
+      try {
+        let get = await fetch('/api/stats');
+        let data = await get.json();
+
+        setContrib(data.contributed_to);
+        setGHLang(data.most_used_lang);
+      } catch {
+        setContrib('failed to load...');
+        setGHLang('failed to load...');
+      }
+    }
+
+    fetchStats();
+  }, []);
+
   return (
     <>
       <Navbar page="home" />
@@ -22,7 +45,7 @@ export default function Home() {
             visually appealing.
           </p>
           <p>
-            As a self-taught programmer, I have created <span className="highlight">fetching...</span> repositories on GitHub, with <span className="highlight">fetching...</span> as my most frequently used languages. My 
+            As a self-taught programmer, I have contributed to <span className="highlight">{contrib}</span> repositories on GitHub, with <span className="highlight">{GHLang}</span> as my most frequently used languages. My 
             experience spans across multiple projects, from small personal experiments to larger, more complex applications.
           </p>
           <p>
