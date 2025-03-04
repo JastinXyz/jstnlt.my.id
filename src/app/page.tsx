@@ -4,11 +4,19 @@ import Button from "@/components/button";
 import Input from "@/components/input";
 import Navbar from "@/components/navbar";
 import Textarea from "@/components/textarea";
+import buildValidationError from "@/lib/build-validation-error";
 import { IconBrandGithub, IconBrandInstagram, IconBrandLinkedin, IconBrandTelegram, IconMail } from "@tabler/icons-react";
+import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
+
+type ContactInputs = { name: string; email: string; message: string; }
 
 export default function Home() {
+  let { register, handleSubmit, reset, setError, formState: { errors } } = useForm<ContactInputs>();
+  let [loading, setLoading] = useState<boolean>(false);
   let [contrib, setContrib] = useState<string>("fetching...");
   let [GHLang, setGHLang] = useState<string>("fetching...");
 
@@ -28,6 +36,20 @@ export default function Home() {
 
     fetchStats();
   }, []);
+
+  let sendMessage: SubmitHandler<ContactInputs> = async(d) => {
+    try {
+      setLoading(true);
+      let { data } = await axios('/api/sendmessage', { method: 'POST', data: d });
+
+      toast.success(data.message);
+      reset();
+      setLoading(false);
+    } catch (error) {
+      buildValidationError(error, setError);
+      setLoading(false)
+    }
+  }
 
   return (
     <>
@@ -63,25 +85,28 @@ export default function Home() {
       </div>
       <div className="mt-32">
         <h1 className="text-2xl text-gray-900 font-bold">Get In Touch 📮</h1>
-        <div className="mt-4">
+        <form onSubmit={handleSubmit(sendMessage)} className="mt-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-neutral-700">
             <div>
               <label htmlFor="name">name</label>
-              <Input type="text" id="name" placeholder="jstn" />
+              <Input type="text" id="name" {...register('name', { required: true })} placeholder="jstn" />
+              <span className="text-xs text-red-500">{errors.name?.message}</span>
             </div>
             <div>
               <label htmlFor="email">email</label>
-              <Input type="email" id="email" placeholder="jstn@example.com" />
+              <Input type="email" id="email" {...register('email', { required: true })} placeholder="jstn@example.com" />
+              <span className="text-xs text-red-500">{errors.email?.message}</span>
             </div>
           </div>
           <div className="mt-4">
             <label htmlFor="message">message</label>
-            <Textarea name="message" id="message" placeholder="hello world!" />
+            <Textarea id="message" {...register('message', { required: true })} placeholder="hello world!" />
+            <span className="text-xs text-red-500">{errors.message?.message}</span>
           </div>
           <div className="mt-2">
-            <Button className="w-full">send message</Button>
+            <Button className="w-full" disabled={loading}>send message</Button>
           </div>
-        </div>
+        </form>
       </div>
     </>
   );

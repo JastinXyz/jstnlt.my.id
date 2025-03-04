@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Footer from "@/components/footer";
+import { Toaster } from 'sonner'
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body
         className={`font-geist antialiased max-w-4xl mx-auto px-4 pt-8 pb-4 bg-[#FEFEFF]`}
       >
+        <Toaster richColors />
         {children}
         <Footer />
       </body>
