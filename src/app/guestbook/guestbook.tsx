@@ -60,11 +60,11 @@ export default function Guestbook() {
                                     <Input type="text" id="message" {...register('message', { required: true })} placeholder="hello world!" />
                                     <span className="text-xs text-red-500">{errors.message?.message}</span>
                                 </div>
-                                <div className="mt-2 flex gap-2">
+                                <div className="mt-2 flex flex-col md:flex-row gap-2">
                                     <Button className="w-full" disabled={loading}>sign message</Button>
-                                    <Button variant={'danger'} onClick={() => signOut()} disabled={loading} className="w-1/3 flex items-center gap-2 justify-center"><span>sign out</span> <IconLogout className="w-5 h-5" /></Button>
+                                    <Button variant={'danger'} onClick={() => signOut()} disabled={loading} className="w-full md:w-1/3 flex items-center gap-2 justify-center"><span>sign out</span> <IconLogout className="w-5 h-5" /></Button>
                                 </div>
-                                <div className="text-sm flex gap-1 items-center mt-2">
+                                <div className="text-xs md:text-sm flex gap-1 items-center mt-2">
                                     <IconInfoCircle className="w-4 h-4" />
                                     <p>Logged in as <span className="font-semibold">{session?.user?.name}</span>.</p>
                                 </div>
