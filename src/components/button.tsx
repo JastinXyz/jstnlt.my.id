@@ -6,6 +6,7 @@ const variants = cva('cursor-pointer rounded-md py-2 px-4 disabled:pointer-event
         variant: {
             primary: 'bg-primary-400 text-white',
             danger: 'bg-red-400 text-white',
+            blank: ''
         }
     },
     defaultVariants: {
