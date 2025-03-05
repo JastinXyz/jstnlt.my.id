@@ -55,7 +55,7 @@ export default function Home() {
     <>
       <Navbar page="home" />
       <div className="mt-20">
-        <h1 className="text-2xl text-gray-900 font-bold">Hi 👋, I'm Jastin Linggar Tama.</h1>
+        <h1 className="text-xl md:text-2xl text-gray-900 font-bold">Hi 👋, I'm Jastin Linggar Tama.</h1>
         <div className="text-neutral-700 text-justify leading-7 flex flex-col gap-4 mt-2">
           <p>
             I am a software engineering student with a deep passion for programming. Since 2020, I have been actively learning and building various projects, 
@@ -84,7 +84,7 @@ export default function Home() {
         </div>
       </div>
       <div className="mt-32">
-        <h1 className="text-2xl text-gray-900 font-bold">Get In Touch 📮</h1>
+        <h1 className="text-xl md:text-2xl text-gray-900 font-bold">Get In Touch 📮</h1>
         <form onSubmit={handleSubmit(sendMessage)} className="mt-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-neutral-700">
             <div>

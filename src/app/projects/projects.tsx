@@ -8,7 +8,7 @@ export default function Projects() {
         <>
             <Navbar page="projects" />
             <div className="mt-20">
-                <h1 className="text-2xl text-gray-900 font-bold">Some Of My Projects</h1>
+                <h1 className="text-xl md:text-2xl text-gray-900 font-bold">Some Of My Projects</h1>
                 <div className="mt-4 leading-7 text-neutral-700 grid grid-cols-1 md:grid-cols-2 gap-6">
                     {projects.map((x, idx) => (
                         <div className="border border-primary-200 rounded p-4" key={idx}>

@@ -6,7 +6,7 @@ export default function Achievements() {
         <>
             <Navbar page="achievements" />
             <div className="mt-20">
-                <h1 className="text-2xl text-gray-900 font-bold">My Achievements!</h1>
+                <h1 className="text-xl md:text-2xl text-gray-900 font-bold">My Achievements!</h1>
                 <div className="mt-4 leading-7 text-neutral-700">
                     <ul className="pl-5">
                         {achievements.map((d, idx) => (
