@@ -20,9 +20,12 @@ export default function Navbar({ page }: { page?: page }) {
                 <Link href={'/guestbook'} className={cn("text-neutral-700 dark:text-neutral-300", page === 'guestbook' && "underline text-gray-900 dark:text-white")}>guestbook</Link>
                 <ThemeSwitch />
             </div>
-            <button onClick={() => setOpen(true)} className="md:hidden text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                <IconMenu2 className="w-6 h-6" />
-            </button>
+            <div className="sm:hidden flex gap-4 items-center">
+                <ThemeSwitch iconSize={24} />
+                <button onClick={() => setOpen(true)} className="text-neutral-700 dark:text-neutral-300 cursor-pointer">
+                    <IconMenu2 className="w-6 h-6" />
+                </button>
+            </div>
             <div className={cn("fixed top-0 left-0 w-full h-full bg-gray-900/50 dark:bg-gray-800/50 p-4", open ? '' : 'hidden')}>
                 <div className="bg-white dark:bg-shark-900 rounded p-4">
                     <div className="flex items-center justify-between">
