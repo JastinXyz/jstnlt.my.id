@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @theme {
   --color-primary-50: #F5F7FA;
   --color-primary-100: #EAEDF4;
@@ -13,10 +15,24 @@
   --color-primary-900: #2D384D;
   --color-primary-950: #1E2533;
 
+  --color-shark-50: #f6f6f6;
+  --color-shark-100: #e7e7e7;
+  --color-shark-200: #d1d1d1;
+  --color-shark-300: #b0b0b0;
+  --color-shark-400: #888888;
+  --color-shark-500: #6d6d6d;
+  --color-shark-600: #5d5d5d;
+  --color-shark-700: #4f4f4f;
+  --color-shark-800: #454545;
+  --color-shark-900: #3d3d3d;
+  --color-shark-950: #1f1f1f;
+
+
+
   --font-geist: 'Geist', sans-serif;
   --font-geist-mono: 'Geist Mono', sans-serif;
 }
 
 .highlight {
-  @apply bg-primary-400 text-white px-[0.25rem] font-geist-mono text-sm;
+  @apply bg-primary-400 dark:bg-primary-500 text-white px-[0.25rem] font-geist-mono text-sm;
 } 

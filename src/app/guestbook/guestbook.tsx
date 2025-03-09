@@ -49,8 +49,8 @@ export default function Guestbook() {
         <>
             <Navbar page="guestbook" />
             <div className="mt-20">
-                <h1 className="text-xl md:text-2xl text-gray-900 font-bold">Guestbook</h1>
-                <div className="mt-2 leading-7 text-neutral-700">
+                <h1 className="text-xl md:text-2xl text-gray-900 dark:text-white font-bold">Guestbook</h1>
+                <div className="mt-2 leading-7 text-neutral-700 dark:text-neutral-300">
                     <p>Leave a message and say hello!</p>
                     <div className="mt-10">
                         {status === 'authenticated' && (
@@ -58,7 +58,7 @@ export default function Guestbook() {
                                 <div>
                                     <label htmlFor="message">message</label>
                                     <Input type="text" id="message" {...register('message', { required: true })} placeholder="hello world!" />
-                                    <span className="text-xs text-red-500">{errors.message?.message}</span>
+                                    <span className="text-xs text-red-400">{errors.message?.message}</span>
                                 </div>
                                 <div className="mt-2 flex flex-col md:flex-row gap-2">
                                     <Button className="w-full" disabled={loading}>sign message</Button>
@@ -72,14 +72,14 @@ export default function Guestbook() {
                         )}
                         
                         {status !== 'authenticated' && (
-                            <Button onClick={() => signIn('github')} variant={'blank'} className="bg-[#333333] hover:bg-[#555555] transition inline-flex gap-2 text-white"><IconBrandGithub className="w-6 h-6" /> Log in with GitHub</Button>
+                            <Button onClick={() => signIn('github')} variant={'blank'} className="bg-[#333333] hover:bg-[#555555] inline-flex gap-2 text-white"><IconBrandGithub className="w-6 h-6" /> Log in with GitHub</Button>
                         )}
                     </div>
                     <div className="mt-10 flex flex-col gap-6">
                         {data?.map((d, idx) => (
                             <div key={idx}>
-                                <p className="text-gray-900">{d.content}</p>
-                                <p className="text-sm text-neutral-500">— By {d.user.name} on {readableTimestamp(d.timestamp)}</p>
+                                <p className="text-gray-900 dark:text-white">{d.content}</p>
+                                <p className="text-sm text-neutral-500 dark:text-neutral-400">— By {d.user.name} on {readableTimestamp(d.timestamp)}</p>
                             </div>
                         ))}
                     </div>
