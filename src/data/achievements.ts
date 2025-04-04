@@ -6,6 +6,22 @@ type achievementsData = Array<{
 
 const achievements: achievementsData = [
     {
+        listStyle: '🥇',
+        name: '1st Place at Place at LKS SMK Banyumas Regency 2025 IT Software Solution for Business.',
+        tasks: [
+            'Database Development: Create a SQL database design to be used in the next module.',
+            'Desktop App: Creating a hotel management including transactions and reports using C# and .Net Framework.',
+        ]
+    },
+    {
+        listStyle: '🥉',
+        name: '3rd Place at Code Colab Hackathon 2024 by Telkom University Purwokerto.',
+        tasks: [
+            'Create a review and rating website for Micro, Small, and Medium Enterprises.',
+            'Create UI/UX designs and website prototypes, then program the website so that it can be used publicly.',
+        ]
+    },
+    {
         listStyle: '🏅',
         name: 'Top 4 at National LKS SMK 2024 Web Technology.',
         tasks: [

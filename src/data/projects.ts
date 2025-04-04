@@ -1,4 +1,4 @@
-import { Icon, IconBrandAlgolia, IconBrandBulma, IconBrandHtml5, IconBrandJavascript, IconBrandNextjs, IconBrandNodejs, IconBrandNpm, IconBrandTailwind, IconBrandTypescript, IconProps } from "@tabler/icons-react";
+import { Icon, IconBrandAlgolia, IconBrandBulma, IconBrandHtml5, IconBrandJavascript, IconBrandLaravel, IconBrandNextjs, IconBrandNodejs, IconBrandNpm, IconBrandTailwind, IconBrandTypescript, IconProps } from "@tabler/icons-react";
 import { ForwardRefExoticComponent, RefAttributes } from "react";
 
 type projectsData = Array<{
@@ -53,6 +53,14 @@ const projects: projectsData = [
         technologies: [IconBrandTypescript, IconBrandNodejs],
         links: {
             github: 'https://github.com/JastinXyz/cukuftawu',
+        }
+    },
+    {
+        name: 'Rate Lokal',
+        description: 'A review and rating website for Micro, Small, and Medium Enterprises.',
+        technologies: [IconBrandTypescript, IconBrandLaravel],
+        links: {
+            github: 'https://github.com/JastinXyz/ratelokal',
         }
     },
     {
