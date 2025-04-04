@@ -76,10 +76,15 @@ export default function Guestbook() {
                         )}
                     </div>
                     <div className="mt-10 flex flex-col gap-6">
-                        {data?.map((d, idx) => (
+                        {data ? data?.map((d, idx) => (
                             <div key={idx}>
                                 <p className="text-gray-900 dark:text-white">{d.content}</p>
                                 <p className="text-sm text-neutral-500 dark:text-neutral-400">— By {d.user.name} on {readableTimestamp(d.timestamp)}</p>
+                            </div>
+                        )) : [...Array(6)].map((d, idx) => (
+                            <div className="animate-pulse" key={idx}>
+                                <div className="h-4 w-36 rounded bg-gray-200"></div>
+                                <div className="h-4 sm:w-96 rounded bg-gray-200 mt-2"></div>
                             </div>
                         ))}
                     </div>
