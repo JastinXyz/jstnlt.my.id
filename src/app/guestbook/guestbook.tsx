@@ -83,8 +83,8 @@ export default function Guestbook() {
                             </div>
                         )) : [...Array(6)].map((d, idx) => (
                             <div className="animate-pulse" key={idx}>
-                                <div className="h-4 w-36 rounded bg-gray-200"></div>
-                                <div className="h-4 sm:w-96 rounded bg-gray-200 mt-2"></div>
+                                <div className="h-4 w-36 rounded bg-gray-200 dark:bg-shark-900"></div>
+                                <div className="h-4 sm:w-96 rounded bg-gray-200 dark:bg-shark-900 mt-2"></div>
                             </div>
                         ))}
                     </div>
