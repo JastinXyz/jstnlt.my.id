@@ -2,7 +2,7 @@ import axios from "axios";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-    let mostusedlang = await axios('https://api.dotmydotid.my.id/api/githubmostusedlanguages?username=JastinXyz');
+    let mostusedlang = await axios('https://apitool.pgl.my.id/api/githubmostusedlanguages?username=JastinXyz');
     let repocount = await axios('https://api.github.com/users/JastinXyz');
     let contrib = await axios('https://api.github.com/graphql', {
         method: 'post',
