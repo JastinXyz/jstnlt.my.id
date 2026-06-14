@@ -79,7 +79,6 @@ export default function Home() {
           <Link href={'https://github.com/JastinXyz'} target="_blank" className="text-neutral-700 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-100"><IconBrandGithub className="w-6 h-6" /></Link>
           <Link href={'https://instagram.com/jstn.lt'} target="_blank" className="text-neutral-700 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-100"><IconBrandInstagram className="w-6 h-6" /></Link>
           <Link href={'https://www.linkedin.com/in/jastinlinggartama'} target="_blank" className="text-neutral-700 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-100"><IconBrandLinkedin className="w-6 h-6" /></Link>
-          <Link href={'https://t.me/jstnlt'} target="_blank" className="text-neutral-700 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-100"><IconBrandTelegram className="w-6 h-6" /></Link>
           <Link href={'mailto:jastinlinggar@gmail.com'} target="_blank" className="text-neutral-700 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-100"><IconMail className="w-6 h-6" /></Link>
         </div>
       </div>
