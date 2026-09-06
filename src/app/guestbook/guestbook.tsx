@@ -11,7 +11,6 @@ import Input from "@/components/input";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import buildValidationError from "@/lib/build-validation-error";
-import { headers } from "next/headers";
 
 type GuestbookInput = { message: string; };
 
