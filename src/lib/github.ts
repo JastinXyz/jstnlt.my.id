@@ -191,7 +191,7 @@ export function totalsFrom(repos: Repo[]): ProfileTotals {
     };
 }
 
-export type LanguageShare = { name: string; repos: number; share: number };
+export type LanguageShare = { name: string; repos: number; share: number; pct: number };
 
 /** Language mix across every repo, the real distribution, not a hand-written list. */
 export function languagesFrom(repos: Repo[], take = 7): LanguageShare[] {
@@ -205,7 +205,7 @@ export function languagesFrom(repos: Repo[], take = 7): LanguageShare[] {
     return [...count.entries()]
         .sort((a, b) => b[1] - a[1])
         .slice(0, take)
-        .map(([name, repos]) => ({ name, repos, share: repos / total }));
+        .map(([name, repos]) => ({ name, repos, share: repos / total, pct: Math.round((repos / total) * 100) }));
 }
 
 export type ContributionDay = { date: string; count: number };
@@ -254,3 +254,39 @@ export async function getContributions(): Promise<Contributions | null> {
  *  Takes owner/name, so org repos get the right card instead of a 404. */
 export const ogCard = (fullName: string) =>
     `https://opengraph.githubassets.com/1/${fullName}`;
+
+/* What the practice is actually written in, counted across the whole Affandra
+ * org rather than typed in by hand. The repos themselves are private, so only
+ * the shape of the stack is published: language names and their share, never a
+ * repository name. Without a token that can see the org this returns nothing
+ * and the section renders without the bar. */
+export async function getOrgLanguages(org = "AFFANDRA-SOLUSI-TEKNOLOGI"): Promise<LanguageShare[]> {
+    try {
+        const res = await fetch(`${API}/orgs/${org}/repos?per_page=100`, {
+            headers: auth(),
+            next: { revalidate: REVALIDATE },
+        });
+        if (!res.ok) return [];
+
+        const raw: { language: string | null }[] = await res.json();
+        const counts = new Map<string, number>();
+        for (const r of raw) {
+            if (!r.language) continue;
+            counts.set(r.language, (counts.get(r.language) ?? 0) + 1);
+        }
+
+        const total = [...counts.values()].reduce((a, b) => a + b, 0);
+        if (!total) return [];
+
+        return [...counts.entries()]
+            .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+            .map(([name, repos]) => ({
+                name,
+                repos,
+                share: repos / total,
+                pct: Math.round((repos / total) * 100),
+            }));
+    } catch {
+        return [];
+    }
+}

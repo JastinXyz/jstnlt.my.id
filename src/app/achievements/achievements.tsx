@@ -1,5 +1,6 @@
 import Navbar from "@/components/navbar";
 import PageHead from "@/components/page-head";
+import RankBadge from "@/components/rank-badge";
 import achievements from "@/data/achievements";
 
 const years = achievements.map((a) => a.year);
@@ -29,13 +30,11 @@ export default function Achievements() {
                 <ol className="shell mt-16 flex flex-col gap-14 md:gap-20">
                     {achievements.map((a, idx) => (
                         <li key={idx} className="grid gap-y-4 md:grid-cols-12 md:gap-x-10">
-                            <p className="flex items-baseline gap-4 md:col-span-3 md:flex-col md:items-start md:gap-2">
+                            <p className="flex flex-wrap items-center gap-4 md:col-span-3 md:flex-col md:items-start md:gap-3">
                                 <span className="display tnum text-3xl leading-none md:text-[3.5rem]">
                                     {a.year}
                                 </span>
-                                <span className="label text-accent-text">
-                                    {/^\d/.test(a.rank) ? `${a.rank} place` : a.rank}
-                                </span>
+                                <RankBadge rank={a.rank} />
                             </p>
 
                             <div className="md:col-span-8 md:col-start-5">

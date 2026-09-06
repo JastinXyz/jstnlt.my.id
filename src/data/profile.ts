@@ -55,9 +55,17 @@ export const affandra = {
 
 /* The work itself, detached from the employer. These are the things he has
  * actually shipped in production; who signed the cheque is a credit line in
- * the timeline below, not a heading repeated three times. */
+ * the timeline below, not a heading repeated three times.
+ *
+ * Scope is stated by naming what he built, not by apologising for what he did
+ * not. "Invoice logic on the school side" says how far the work reached
+ * without either claiming the payments domain or talking him down; the
+ * platform item names the boundary the same way. A portfolio that claims the
+ * whole stack is checkable, and fails the check. */
 export const productionWork = {
     lead: "On a team since 2025, inside an education and payments platform of around twenty Go, Laravel and Node services used by schools, partners and their members.",
+    /* the phrase the highlighter sits under, verbatim from the sentence above */
+    leadMark: "around twenty Go, Laravel and Node services",
     items: [
         {
             title: "A school service, end to end",
@@ -66,22 +74,25 @@ export const productionWork = {
         {
             title: "Migrations that are safe to run twice",
             body: "Moved live schools off the old platform onto the new one with a migration that resumes where it stopped, so no school lost a working day.",
+            mark: "so no school lost a working day",
         },
         {
             title: "Signup to a running tenant",
             body: "The pipeline that takes a new partner from signup to live: document checks, provisioning across services, their own subdomain, and the stock they start with.",
         },
         {
-            title: "Billing that has to be exact",
-            body: "The logic behind school invoices, including reference IDs that stay unique across invoices and every payment made against them.",
+            title: "Invoices and payment references",
+            body: "Invoice logic on the school side, and reference IDs that stay unique across invoices and every payment made against them, so a payment matches exactly one bill.",
+            mark: "reference IDs that stay unique",
         },
         {
-            title: "Messaging that stops dropping under load",
+            title: "Notifications that survive the busy days",
             body: "Reworked the delivery path across push, email and WhatsApp so notifications survive the days everyone gets one at once.",
+            mark: "survive the days everyone gets one at once",
         },
         {
-            title: "The Kubernetes side",
-            body: "Routing, wildcard certificates, per-environment manifests, and staging to production cutovers.",
+            title: "Enough of the Kubernetes side to ship",
+            body: "Routing, certificates and per-environment manifests when something I built needs them. The platform itself belongs to the people who run it full time.",
         },
     ],
 };

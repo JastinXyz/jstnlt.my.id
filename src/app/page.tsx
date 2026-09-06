@@ -11,13 +11,21 @@ import achievements, { LKS_NOTE } from "@/data/achievements";
 import highlights from "@/data/highlights";
 import { about, affandra, experience, positioning, productionWork, stack } from "@/data/profile";
 import socials from "@/data/socials";
-import { getAllRepos, getContributions, getRepos, ogCard, totalsFrom } from "@/lib/github";
+import { getAllRepos, getContributions, getOrgLanguages, getRepos, ogCard, totalsFrom } from "@/lib/github";
+import { languageColor } from "@/data/language-colors";
 import Link from "next/link";
+import Marked from "@/components/marked";
+import RankBadge from "@/components/rank-badge";
 
 export const revalidate = 3600;
 
 export default async function Home() {
-    const [repos, allRepos, contributions] = await Promise.all([getRepos(), getAllRepos(), getContributions()]);
+    const [repos, allRepos, contributions, orgLanguages] = await Promise.all([
+        getRepos(),
+        getAllRepos(),
+        getContributions(),
+        getOrgLanguages(),
+    ]);
     /* the hero counts every public repo, hidden ones included: the star count is
        a fact about his GitHub, not about what this site chooses to show */
     const totals = totalsFrom(allRepos);
@@ -282,6 +290,37 @@ export default async function Home() {
                         ))}
                     </Stagger>
 
+                    {/* What the org is written in, counted live across all of it. This is
+                        the one place the site carries hues outside its accent: here the
+                        colour is the label, so it is GitHub's own. Every swatch takes a
+                        hairline ring because JavaScript yellow on paper is about 1.4:1 and
+                        would otherwise read as a gap. */}
+                    {orgLanguages.length > 0 && (
+                        <Stagger className="mt-10">
+                            <div className="flex h-11 w-full overflow-hidden rounded-xs">
+                                {orgLanguages.map((l) => (
+                                    <span
+                                        key={l.name}
+                                        title={`${l.name}, ${l.pct}%`}
+                                        style={{ width: `${l.share * 100}%`, background: languageColor(l.name) }}
+                                    />
+                                ))}
+                            </div>
+                            <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
+                                {orgLanguages.map((l) => (
+                                    <li key={l.name} className="flex items-center gap-2 text-sm text-muted">
+                                        <span
+                                            aria-hidden="true"
+                                            className="size-2.5 shrink-0 rounded-[2px] ring-1 ring-rule-strong/40"
+                                            style={{ background: languageColor(l.name) }}
+                                        />
+                                        {l.name} <span className="tnum text-ink">{l.pct}%</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </Stagger>
+                    )}
+
                     <Stagger className="mt-12 grid gap-x-10 gap-y-8 md:grid-cols-2">
                         {affandra.items.map((it) => (
                             <div key={it.title} className="border-t border-rule pt-5">
@@ -304,7 +343,7 @@ export default async function Home() {
                                 className="display block text-[clamp(1.75rem,4.5vw,3rem)] uppercase leading-[0.95] md:col-span-7"
                             />
                             <p className="prose self-start text-md md:col-span-4 md:col-start-9">
-                                {productionWork.lead}
+                                <Marked text={productionWork.lead} phrase={productionWork.leadMark} />
                             </p>
                         </div>
 
@@ -312,7 +351,9 @@ export default async function Home() {
                             {productionWork.items.map((it) => (
                                 <div key={it.title} className="border-t border-rule pt-5">
                                     <h3 className="display-sm text-lg">{it.title}</h3>
-                                    <p className="mt-2 text-sm leading-relaxed text-muted">{it.body}</p>
+                                    <p className="mt-2 text-sm leading-relaxed text-muted">
+                                        <Marked text={it.body} phrase={it.mark} />
+                                    </p>
                                 </div>
                             ))}
                         </Stagger>
@@ -332,7 +373,11 @@ export default async function Home() {
                                     </li>
                                 ))}
                             </ul>
-                            <p className="label mt-4">All three at Cazh, Purwokerto</p>
+                            {/* the one place the employer is named, so it is named in
+                                full rather than as the short form only he would know */}
+                            <p className="label mt-4">
+                                All three at <span className="text-ink">PT Cazh Teknologi Inovasi</span>, Purwokerto
+                            </p>
                         </div>
                     </div>
                 </section>
@@ -389,11 +434,9 @@ export default async function Home() {
                         <Stagger className="mt-6 flex flex-col">
                             {lks.map((a, i) => (
                                 <div key={i} className="grid gap-x-10 gap-y-3 border-t border-rule py-7 md:grid-cols-12">
-                                    <p className="flex items-baseline gap-3 md:col-span-3 md:flex-col md:items-start md:gap-2">
+                                    <p className="flex flex-wrap items-center gap-3 md:col-span-3 md:flex-col md:items-start">
                                         <span className="display tnum text-2xl leading-none md:text-4xl">{a.year}</span>
-                                        <span className="label text-accent-text">
-                                            {/^\d/.test(a.rank) ? `${a.rank} place` : a.rank}
-                                        </span>
+                                        <RankBadge rank={a.rank} />
                                     </p>
                                     <div className="md:col-span-8 md:col-start-5">
                                         <h3 className="display-sm text-lg">{a.event}</h3>
@@ -410,11 +453,9 @@ export default async function Home() {
                                 <Stagger className="mt-4 flex flex-col">
                                     {otherComps.map((a, i) => (
                                         <div key={i} className="grid gap-x-10 gap-y-3 border-t border-rule py-7 md:grid-cols-12">
-                                            <p className="flex items-baseline gap-3 md:col-span-3 md:flex-col md:items-start md:gap-2">
+                                            <p className="flex flex-wrap items-center gap-3 md:col-span-3 md:flex-col md:items-start">
                                                 <span className="display tnum text-2xl leading-none md:text-4xl">{a.year}</span>
-                                                <span className="label text-accent-text">
-                                                    {/^\d/.test(a.rank) ? `${a.rank} place` : a.rank}
-                                                </span>
+                                                <RankBadge rank={a.rank} />
                                             </p>
                                             <div className="md:col-span-8 md:col-start-5">
                                                 <h3 className="display-sm text-lg">{a.event}</h3>
