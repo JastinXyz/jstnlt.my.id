@@ -265,7 +265,7 @@ export default function Navbar({ page, lost = false }: { page?: page; lost?: boo
                         width={307}
                         height={1038}
                         aria-hidden="true"
-                        className="pointer-events-none absolute right-0 bottom-0 h-[46vh] max-h-[420px] w-auto"
+                        className="char-art pointer-events-none absolute right-0 bottom-0 h-[46vh] max-h-[420px] w-auto"
                     />
 
                     <div className="shell relative mt-auto py-8">

@@ -61,7 +61,7 @@ export default function FooterCharacter({ className }: { className?: string }) {
                     alt=""
                     width={307}
                     height={640}
-                    className="block h-full w-auto"
+                    className="char-art block h-full w-auto"
                     style={{ opacity: leg === 0 ? 1 : 0 }}
                 />
                 <img
@@ -69,7 +69,7 @@ export default function FooterCharacter({ className }: { className?: string }) {
                     alt=""
                     width={307}
                     height={640}
-                    className="absolute inset-0 block h-full w-auto"
+                    className="char-art absolute inset-0 block h-full w-auto"
                     style={{ opacity: leg === 1 ? 1 : 0 }}
                 />
                 <img

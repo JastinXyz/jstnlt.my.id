@@ -184,6 +184,16 @@
     animation: char-shadow 4.6s ease-in-out infinite;
   }
 
+  /* Dark mode only. The drawing is outlined in near black, which on a near
+     black page dissolves: the shoulder and the outside of the jeans lose their
+     edge entirely. One pixel of light around the silhouette gives it back.
+     The brightness is left alone on purpose; the shirt reads as white because
+     it is white. */
+  :root[data-theme="dark"] .char__frame,
+  :root[data-theme="dark"] .char-art {
+    filter: drop-shadow(0 0 1px oklch(100% 0 0 / 0.45));
+  }
+
   @keyframes char-breathe {
     0%,
     100% {
