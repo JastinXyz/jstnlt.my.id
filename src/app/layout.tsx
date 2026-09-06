@@ -7,21 +7,61 @@ import { getSession } from "@/lib/auth";
 import { Metadata, Viewport } from "next";
 import { ThemeProvider } from "next-themes";
 
-const description = "Jastin Linggar Tama, fullstack developer in Purwokerto, Indonesia. Go, TypeScript and PHP across school and finance systems, plus open source other people run.";
+const SITE = "https://jstnlt.my.id";
+const description =
+  "Jastin Linggar Tama, fullstack developer in Purwokerto, Indonesia. Go, TypeScript and PHP across school and finance systems, plus open source other people run.";
 
+/* metadataBase is what makes every relative URL below resolve, including the
+ * social card Next builds from opengraph-image.png. Without it the card is
+ * advertised with a relative path and no crawler can fetch it. */
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE),
   title: {
-    default: "jstnlt",
-    template: "jstnlt / %s",
+    default: "Jastin Linggar Tama, fullstack developer",
+    template: "%s / jstnlt",
   },
   description,
+  applicationName: "jstnlt.my.id",
+  authors: [{ name: "Jastin Linggar Tama", url: SITE }],
+  creator: "Jastin Linggar Tama",
+  publisher: "Jastin Linggar Tama",
+  alternates: { canonical: "/" },
   openGraph: {
-    type: 'website',
-    title: 'jstnlt',
+    type: "website",
+    siteName: "jstnlt.my.id",
+    locale: "en_GB",
+    title: "Jastin Linggar Tama, fullstack developer",
     description,
-    url: 'https://jstnlt.my.id'
-  }
-}
+    url: SITE,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Jastin Linggar Tama, fullstack developer",
+    description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+  },
+};
+
+/* Search engines read this to answer "who is Jastin Linggar Tama" with the
+ * right person rather than guessing from the page copy. Everything in it is
+ * already visible on the page; nothing is asserted here that is not. */
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Jastin Linggar Tama",
+  url: SITE,
+  jobTitle: "Fullstack developer",
+  address: { "@type": "PostalAddress", addressLocality: "Purwokerto", addressCountry: "ID" },
+  sameAs: [
+    "https://github.com/JastinXyz",
+    "https://www.linkedin.com/in/jastinlinggartama",
+    "https://instagram.com/jstn.lt",
+  ],
+};
 
 export const viewport: Viewport = {
   // literal values, kept in sync with --color-paper in tokens.css
@@ -49,6 +89,10 @@ export default async function RootLayout({
         />
       </head>
       <body id="top" className="font-body bg-paper text-ink antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        />
         <Providers session={session}>
           <ThemeProvider attribute="data-theme">
             <SmoothScroll />
