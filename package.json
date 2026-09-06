@@ -2,6 +2,14 @@
   "name": "jstnlt.my.id",
   "version": "0.1.0",
   "private": true,
+  "description": "Personal site of Jastin Linggar Tama. Next.js, Tailwind, and a drawn character that lives in the hero.",
+  "author": "Jastin Linggar Tama",
+  "license": "MIT",
+  "homepage": "https://jstnlt.my.id",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JastinXyz/jstnlt.my.id"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -14,6 +22,7 @@
     "axios": "^1.8.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "lenis": "^1.3.26",
     "lru-cache": "^11.0.2",
     "mongodb": "^6.14.1",
     "next": "15.2.0",
