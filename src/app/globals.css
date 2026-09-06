@@ -1,38 +1,274 @@
+/* Hallmark · genre: editorial · macrostructure: Marquee Hero
+ * theme: studied-DNA (source: url https://www.adianvel.me/) · nav: N6 · footer: Ft1
+ * enrichment: none · tokens live in ../styles/tokens.css
+ */
 @import "tailwindcss";
+@import "../styles/tokens.css";
 
 @variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-@theme {
-  --color-primary-50: #F5F7FA;
-  --color-primary-100: #EAEDF4;
-  --color-primary-200: #D1D9E6;
-  --color-primary-300: #A8B9D1;
-  --color-primary-400: #7993B7;
-  --color-primary-500: #58769F;
-  --color-primary-600: #455E84;
-  --color-primary-700: #384B6C;
-  --color-primary-800: #32415A;
-  --color-primary-900: #2D384D;
-  --color-primary-950: #1E2533;
+/* Everything custom lives in a layer. Unlayered CSS outranks every
+ * Tailwind utility, so an unlayered `.label { color: … }` would beat
+ * `text-accent` on the same element, so layering keeps utilities winning. */
 
-  --color-shark-50: #f6f6f6;
-  --color-shark-100: #e7e7e7;
-  --color-shark-200: #d1d1d1;
-  --color-shark-300: #b0b0b0;
-  --color-shark-400: #888888;
-  --color-shark-500: #6d6d6d;
-  --color-shark-600: #5d5d5d;
-  --color-shark-700: #4f4f4f;
-  --color-shark-800: #454545;
-  --color-shark-900: #3d3d3d;
-  --color-shark-950: #1f1f1f;
+@layer base {
+  html,
+  body {
+    /* clip, never hidden: hidden would kill position: sticky */
+    overflow-x: clip;
+  }
 
+  /* Lenis owns scrolling; scroll-behavior: smooth fights it. */
 
+  /* the rail jumps to section ids; keep the heading off the very top edge */
+  section[id] {
+    scroll-margin-top: 2.5rem;
+  }
 
-  --font-geist: 'Geist', sans-serif;
-  --font-geist-mono: 'Geist Mono', sans-serif;
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    /* never transitioned: the ring is instant or it is useless */
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
+    border-radius: var(--radius-xs);
+  }
 }
 
-.highlight {
-  @apply bg-primary-400 dark:bg-primary-500 text-white px-[0.25rem] font-geist-mono text-sm;
-} 
+@layer components {
+  /* ── page shell ───────────────────────────────────────
+     Sections that change surface run full-bleed and put .shell
+     on their inner wrapper instead. */
+
+  .shell {
+    width: min(100%, 72rem);
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 3rem);
+  }
+
+  /* ── display type ─────────────────────────────────────
+     Bricolage carries a width axis; 78 % is the condensed
+     register the whole page is set in. */
+
+  .display {
+    font-family: var(--font-display);
+    font-stretch: 78%;
+    font-weight: 800;
+    letter-spacing: var(--tracking-display);
+    line-height: 0.88;
+    /* long project names break inside the word, not past the viewport */
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+
+  .display-sm {
+    font-family: var(--font-display);
+    font-stretch: 82%;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+
+  .label {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-neutral);
+  }
+
+  .prose {
+    max-width: 62ch;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* The only rule left on the page. Surfaces do the rest of the dividing. */
+  .rule {
+    border: 0;
+    border-top: var(--rule-hair) solid var(--color-rule);
+  }
+
+  /* Highlighter band. A flat background fills the whole line box and reads
+     as a block; the gradient keeps the ink behind the x-height, the way a
+     real marker lands. */
+  .mark {
+    background-image: linear-gradient(
+      180deg,
+      transparent 34%,
+      var(--color-accent-soft) 34%,
+      var(--color-accent-soft) 92%,
+      transparent 92%
+    );
+    color: var(--color-ink);
+    padding-inline: 0.22em;
+    font-weight: 500;
+  }
+
+  /* ── the drawing of him ───────────────────────────────
+     One flat illustration per pose, stacked and cross-faded. The three idle
+     rhythms run on unrelated periods so the loop never lines up with itself;
+     the lean is applied to the whole figure at once, because anything that
+     bends a joint needs the art cut into layers, and a cut at the neck or the
+     shoulder shows as a seam the moment it moves. */
+
+  .char {
+    line-height: 0;
+  }
+  .char__lean {
+    position: relative;
+    height: 100%;
+    width: fit-content;
+    transform: translateX(calc(var(--lean, 0) * 9px)) rotate(calc(var(--lean, 0) * 1.6deg));
+    transform-origin: 50% 100%;
+    transition: transform 600ms var(--ease-out);
+  }
+  .char__shift {
+    height: 100%;
+    animation: char-shift 9.1s ease-in-out infinite;
+  }
+  .char__sway {
+    position: relative;
+    height: 100%;
+    aspect-ratio: var(--char-ratio);
+    transform-origin: 50% 100%;
+    animation: char-sway 6.7s ease-in-out infinite;
+  }
+  .char__sway[role="button"] {
+    cursor: pointer;
+  }
+  .char__frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 140ms linear;
+    animation: char-breathe 4.6s ease-in-out infinite;
+    transform-origin: 50% 100%;
+  }
+  .char__frame.is-on {
+    opacity: 1;
+  }
+  /* Mid-wave the two frames are swapped outright. Cross-fading them puts two
+     half-transparent images over the page for one frame, which reads as a
+     white blink at 260 ms intervals. */
+  .char--snap .char__frame {
+    transition: none;
+  }
+  .char__shadow {
+    position: absolute;
+    inset-inline: 12%;
+    bottom: -5px;
+    height: 9px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, var(--color-char-shadow), transparent 70%);
+    animation: char-shadow 4.6s ease-in-out infinite;
+  }
+
+  @keyframes char-breathe {
+    0%,
+    100% {
+      transform: translateY(0) scaleY(1);
+    }
+    50% {
+      transform: translateY(-3px) scaleY(1.006);
+    }
+  }
+  @keyframes char-sway {
+    0%,
+    100% {
+      transform: rotate(-0.9deg);
+    }
+    50% {
+      transform: rotate(0.9deg);
+    }
+  }
+  @keyframes char-shift {
+    0%,
+    100% {
+      transform: translateX(-3px);
+    }
+    50% {
+      transform: translateX(3px);
+    }
+  }
+  @keyframes char-shadow {
+    0%,
+    100% {
+      transform: scaleX(1);
+      opacity: 0.9;
+    }
+    50% {
+      transform: scaleX(0.94);
+      opacity: 0.7;
+    }
+  }
+
+  /* Sibling-hover on the language chart: the hovered band takes the room,
+     the rest give it up. CSS only, no JS, and it simply doesn't fire on
+     touch, where there is no hover to begin with. */
+  .langbar {
+    transition: flex-grow var(--dur-long) var(--ease-out);
+  }
+  .langbar__n {
+    transition: opacity var(--dur-short) var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .langbars:hover .langbar {
+      flex-grow: 0.5;
+    }
+    .langbars .langbar:hover {
+      flex-grow: 4;
+    }
+    .langbars .langbar:hover .langbar__n {
+      opacity: 1;
+    }
+  }
+
+}
+
+/* ── theme toggle · circular reveal ─────────────────────*/
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 0;
+}
+::view-transition-new(root) {
+  z-index: 1;
+}
+
+/* ── reduced motion ─────────────────────────────────────
+   Unlayered on purpose: this must outrank everything. */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
