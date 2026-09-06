@@ -1,9 +1,9 @@
 import { getServerSession } from "next-auth";
-import { authConfig } from "../../../../auth.config";
+import { authConfig } from "@/lib/auth";
 import { NextResponse } from "next/server";
 import db from "@/lib/db";
 import { make } from "simple-body-validator";
-import ratelimit from "@/lib/ratelimit";
+import ratelimit, { clientKey } from "@/lib/ratelimit";
 
 const limiter = ratelimit({
     interval: 15 * 60 * 1000,
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
     if (!validator.validate()) return NextResponse.json({ errors: validator.errors().all() }, { status: 400 })
 
     try {
-        await limiter.check(new NextResponse(), 3, "CACHE_TOKEN");
+        await limiter.check(3, session.user?.email ?? session.user?.name ?? clientKey(req));
 
         try {
             let client = await db;
