@@ -10,10 +10,12 @@ import FooterCharacter from "./footer-character";
 export default function Footer() {
     return (
         <footer className="shell pt-14 pb-4 md:pt-20">
-            <p className="display-sm max-w-[22ch] text-lg">Thanks for reading this far.</p>
+            {/* his head and shoulders sit above the rule, so the two lines here
+                have to keep out of that column or they run under him */}
+            <p className="display-sm pr-24 text-lg md:pr-32">Thanks for reading this far.</p>
             {/* The footer is in the layout, so this has to read the same on the
                 work list, the awards page and the 404. Nothing about "above". */}
-            <p className="prose mt-2 max-w-[42ch] text-sm">
+            <p className="prose mt-2 max-w-[42ch] pr-24 text-sm md:pr-32">
                 Still building. Purwokerto, Indonesia.
             </p>
 
@@ -27,10 +29,12 @@ export default function Footer() {
                     percentage that goes unreadable on a phone */}
                 <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2 pt-5 pr-24 pb-28 md:pr-40 md:pb-32">
                     <p className="label">© {new Date().getFullYear()} Jastin Linggar Tama</p>
-                    <span aria-hidden="true" className="label">·</span>
+                    {/* a phone already has its own way back to the top, and the
+                        link sat under his dangling feet */}
+                    <span aria-hidden="true" className="label hidden sm:inline">·</span>
                     <a
                         href="#top"
-                        className="label group whitespace-nowrap transition-colors duration-150 hover:text-accent-text"
+                        className="label group hidden whitespace-nowrap transition-colors duration-150 hover:text-accent-text sm:inline-flex"
                     >
                         Back to top{" "}
                         <span

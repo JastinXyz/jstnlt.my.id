@@ -27,6 +27,11 @@ function levelsFor(counts: number[]) {
     return [1, q(0.5), q(0.8), q(0.95)];
 }
 
+/* "26 Aug 2026", not "2026-08-26": the ISO string is for machines, and on a
+ * phone it reads as a serial number sitting in the middle of a sentence. */
+const longDate = (iso: string) =>
+    new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+
 const ordinal = (n: number) => {
     const s = ["th", "st", "nd", "rd"], v = n % 100;
     return n + (s[(v - 20) % 10] ?? s[v] ?? s[0]);
@@ -101,18 +106,20 @@ export default function ContributionGraph({ data }: { data: Contributions }) {
                 </div>
             </div>
 
-            {/* justify-between now that the grid fills the width: the two ends
-                line up with the calendar edges instead of floating past them */}
-            <div className="mt-6 flex flex-wrap items-center justify-between gap-x-10 gap-y-3">
+            {/* One row from sm up, with the ends lining up with the calendar
+                edges. On a phone they stack and centre: two short lines pinned
+                to opposite margins read as a layout that broke, centred they
+                read as a caption under the grid. */}
+            <div className="mt-6 flex flex-col items-center gap-3 text-center sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-10 sm:text-left">
                 <p className="label">
                     Busiest day <span className="tnum text-ink">{busiest.count}</span> on{" "}
-                    <span className="tnum text-ink">{busiest.date}</span>
+                    <span className="tnum text-ink">{longDate(busiest.date)}</span>
                 </p>
                 <div className="flex items-center gap-2">
                     <span className="label">Less</span>
                     <span className="flex items-center gap-1">
                         {LEVEL.map((c) => (
-                            <span key={c} className={cn("h-3 w-3 rounded-[2px]", c)} />
+                            <span key={c} className={cn("size-3.5 rounded-[2px] sm:size-3", c)} />
                         ))}
                     </span>
                     <span className="label">More</span>

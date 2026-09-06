@@ -140,7 +140,7 @@ export default async function Home() {
                                 as="h2"
                                 trigger="scroll"
                                 text="Things other people run"
-                                className="display block text-[clamp(1.75rem,5vw,3.25rem)] uppercase leading-none"
+                                className="display block text-[clamp(1.75rem,4.5vw,3rem)] uppercase leading-none"
                             />
                             <Link href="/projects" className="label whitespace-nowrap transition-colors duration-150 hover:text-accent-text">
                                 All the work <span aria-hidden="true">→</span>
@@ -258,9 +258,11 @@ export default async function Home() {
                             trigger="scroll"
                             text={affandra.name}
                             /* The name is short enough to sit on one line, which left this
-                               heading a third the height of every other one. Capped so it
-                               breaks after "Solusi", the way the other headings run. */
-                            className="display block max-w-[13ch] text-[clamp(1.75rem,4.5vw,3rem)] uppercase leading-[0.95] md:col-span-7"
+                               heading a third the height of every other one. Capped from md
+                               up so it breaks after "Solusi", the way the other headings
+                               run; on a phone the cap is off and it stays one line, because
+                               two lines of it there is most of the screen. */
+                            className="display block text-[clamp(1.75rem,4.5vw,3rem)] uppercase leading-[0.95] md:col-span-7 md:max-w-[13ch]"
                         />
                         <div className="self-start md:col-span-4 md:col-start-9">
                             <p className="label">{affandra.period}</p>
@@ -341,7 +343,7 @@ export default async function Home() {
                         <section id="commits" className="shell py-16 md:py-24">
                             <SectionEyebrow index={5} label="Every day this year" />
                             <div>
-                                <h2 className="display text-[clamp(1.75rem,5vw,3.25rem)] uppercase leading-none">
+                                <h2 className="display text-[clamp(1.75rem,4.5vw,3rem)] uppercase leading-none">
                                     <Counter value={contributions.total} /> commits
                                 </h2>
                                 <p className="prose mt-4 mb-10 text-md">
@@ -436,7 +438,14 @@ export default async function Home() {
                         <div className="md:col-span-5">
                             <SectionEyebrow onInk index={7} label="Say hello" />
                             <h2 className="display text-[clamp(2rem,6vw,4rem)] uppercase leading-[0.92]">
-                                Let’s build<br />something<br />together
+                                {/* three deliberate lines from md up; on a phone the breaks
+                                    are off and it wraps on its own, because forced lines that
+                                    short leave a column of stubs */}
+                                Let’s build{" "}
+                                <br className="hidden md:block" />
+                                something{" "}
+                                <br className="hidden md:block" />
+                                together
                             </h2>
                             <p className="mt-6 max-w-[36ch] leading-relaxed text-on-panel-muted">
                                 Open to talking about backend work, system design, and anything
