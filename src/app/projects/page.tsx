@@ -1,9 +1,9 @@
+import { Metadata } from "next";
 import Projects from "./projects";
 
-export const metadata = {
-    title: 'Projects'
-}
+export const metadata: Metadata = { title: "work" };
+export const revalidate = 3600;
 
-export default function ProjectsPage() {
-    return <Projects />
+export default function Page() {
+    return <Projects />;
 }

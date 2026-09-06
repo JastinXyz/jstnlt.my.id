@@ -2,23 +2,36 @@ import "./globals.css";
 import Footer from "@/components/footer";
 import { Toaster } from 'sonner'
 import Providers from "./providers";
-import { getSession } from "../../auth.config";
-import { Metadata } from "next";
+import SmoothScroll from "@/components/smooth-scroll";
+import { getSession } from "@/lib/auth";
+import { Metadata, Viewport } from "next";
 import { ThemeProvider } from "next-themes";
+
+const description = "Jastin Linggar Tama, fullstack developer in Purwokerto, Indonesia. Go, TypeScript and PHP across school and finance systems, plus open source other people run.";
 
 export const metadata: Metadata = {
   title: {
     default: "jstnlt",
-    template: "jstnlt — %s",
+    template: "jstnlt / %s",
   },
-  description: "Jastin Linggar Tama is a passionate software engineering student from Purwokerto, Indonesia, specializing in web development and UI/UX design. Since 2020, he has been actively building projects and improving his technical skills.",
+  description,
   openGraph: {
     type: 'website',
     title: 'jstnlt',
-    description: "Jastin Linggar Tama is a passionate software engineering student from Purwokerto, Indonesia, specializing in web development and UI/UX design. Since 2020, he has been actively building projects and improving his technical skills.",
+    description,
     url: 'https://jstnlt.my.id'
   }
 }
+
+export const viewport: Viewport = {
+  // literal values, kept in sync with --color-paper in tokens.css
+  // (the browser chrome needs a concrete colour, not a var())
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f9f2e9" },
+    { media: "(prefers-color-scheme: dark)", color: "#160f0c" },
+  ],
+}
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -30,14 +43,16 @@ export default async function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&display=swap" rel="stylesheet" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Geist:wght@100..900&display=swap"
+          rel="stylesheet"
+        />
       </head>
-      <body
-        className={`font-geist antialiased max-w-4xl mx-auto px-6 md:px-4 pt-8 pb-4 bg-[#FEFEFF] dark:bg-shark-950`}
-      >
+      <body id="top" className="font-body bg-paper text-ink antialiased">
         <Providers session={session}>
           <ThemeProvider attribute="data-theme">
-            <Toaster richColors />
+            <SmoothScroll />
+            <Toaster richColors position="bottom-right" />
             {children}
             <Footer />
           </ThemeProvider>

@@ -8,7 +8,7 @@ export default function Providers({ session, children }: { session: Session | nu
     return (
         <SessionProvider session={session}>
             {children}
-            <Next13ProgressBar color="#7993B7" />
+            <Next13ProgressBar color="var(--color-accent)" height="2px" />
         </SessionProvider>
     )
 }
