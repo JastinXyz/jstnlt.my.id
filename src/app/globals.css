@@ -110,6 +110,19 @@
   /* Highlighter band. A flat background fills the whole line box and reads
      as a block; the gradient keeps the ink behind the x-height, the way a
      real marker lands. */
+  /* The band is a gradient, so it can be swept: the painted width goes from
+     nothing to full, left to right, the way a marker is actually dragged.
+     Nothing moves, nothing fades, only the paint arrives. */
+  .js-motion .mark {
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+    transition: background-size 700ms var(--ease-out);
+  }
+
+  .js-motion .mark.is-in {
+    background-size: 100% 100%;
+  }
+
   .mark {
     background-image: linear-gradient(
       180deg,
@@ -122,6 +135,126 @@
     padding-inline: 0.22em;
     font-weight: 500;
   }
+
+  /* ── scroll reveal ────────────────────────────────────
+     Parked in CSS and gated on .js-motion, which an inline script in the head
+     sets before first paint. Two reasons, both learned the hard way: parking
+     in JavaScript flashes the content before hydration, and gating on the
+     class means that if the script never runs, nothing is ever hidden.
+
+     No measurement of any kind happens here. The earlier attempt read element
+     offsets at mount, which the forty-odd remote images invalidated as they
+     loaded. This is a class toggle and two transitions. */
+
+  .js-motion [data-rise] {
+    opacity: 0;
+    transform: translateY(var(--rise-dist));
+    transition:
+      opacity var(--rise-dur) var(--ease-out),
+      transform var(--rise-dur) var(--ease-out);
+    transition-delay: calc(var(--i, 0) * var(--rise-stag));
+  }
+
+  .js-motion [data-rise].is-in,
+  .js-motion .is-in [data-rise] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* on screen at load: released with no transition at all */
+  .js-motion .no-rise[data-rise],
+  .js-motion .no-rise [data-rise] {
+    transition: none;
+  }
+
+  /* A first place fills from the left. Painted as a gradient rather than a
+     background colour so the same background-size trick as the highlighter
+     works on it; without motion it is simply a filled block. */
+  .badge-win {
+    background-image: linear-gradient(90deg, var(--color-accent) 0 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+
+  .js-motion .badge-win {
+    background-size: 0% 100%;
+    transition: background-size 620ms var(--ease-out);
+  }
+
+  .js-motion .badge-win.is-in {
+    background-size: 100% 100%;
+  }
+
+  :root[data-theme="dark"] .badge-win {
+    background-image: linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--color-accent) 15%, transparent) 0 100%
+    );
+  }
+
+  /* The calendar fills in column by column, oldest week first. The cells only
+     fade: moving three hundred and seventy-one squares is a different thing
+     entirely, and the grid has to stay a grid while it arrives. */
+  .js-motion [data-cal] .cal-cell {
+    opacity: 0;
+    transition: opacity 320ms var(--ease-out);
+    transition-delay: var(--d, 0ms);
+  }
+  .js-motion .is-in [data-cal] .cal-cell {
+    opacity: 1;
+  }
+  .js-motion .no-rise [data-cal] .cal-cell {
+    transition: none;
+  }
+
+  /* The language bar fills rather than rises: it is a measurement, and a
+     measurement that slides up from nowhere says nothing, while one that grows
+     from zero says what it is. Segments start one after another, left to
+     right, in the order they are stacked. */
+  .js-motion [data-bar] > * {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 900ms var(--ease-out);
+  }
+  .js-motion .is-in [data-bar] > * {
+    transform: scaleX(1);
+  }
+  .js-motion .is-in [data-bar] > *:nth-child(2) { transition-delay: 90ms; }
+  .js-motion .is-in [data-bar] > *:nth-child(3) { transition-delay: 180ms; }
+  .js-motion .is-in [data-bar] > *:nth-child(4) { transition-delay: 260ms; }
+  .js-motion .is-in [data-bar] > *:nth-child(5) { transition-delay: 330ms; }
+  .js-motion .is-in [data-bar] > *:nth-child(n + 6) { transition-delay: 390ms; }
+  .js-motion .no-rise [data-bar] > * {
+    transition: none;
+  }
+
+  /* children of a stagger group are the animated elements themselves */
+  .js-motion [data-stagger] > * {
+    opacity: 0;
+    transform: translateY(var(--rise-dist));
+    transition:
+      opacity var(--rise-dur) var(--ease-out),
+      transform var(--rise-dur) var(--ease-out);
+    transition-delay: calc(var(--i, 0) * var(--rise-stag));
+  }
+  .js-motion [data-stagger].is-in > * {
+    opacity: 1;
+    transform: none;
+  }
+  .js-motion [data-stagger].no-rise > * {
+    transition: none;
+  }
+
+  /* the index that drives the stagger, counted in CSS so no JavaScript has to
+     walk the children */
+  .js-motion [data-stagger] > *:nth-child(1) { --i: 0; }
+  .js-motion [data-stagger] > *:nth-child(2) { --i: 1; }
+  .js-motion [data-stagger] > *:nth-child(3) { --i: 2; }
+  .js-motion [data-stagger] > *:nth-child(4) { --i: 3; }
+  .js-motion [data-stagger] > *:nth-child(5) { --i: 4; }
+  .js-motion [data-stagger] > *:nth-child(6) { --i: 5; }
+  .js-motion [data-stagger] > *:nth-child(7) { --i: 6; }
+  .js-motion [data-stagger] > *:nth-child(n + 8) { --i: 7; }
 
   /* ── the drawing of him ───────────────────────────────
      One flat illustration per pose, stacked and cross-faded. The three idle

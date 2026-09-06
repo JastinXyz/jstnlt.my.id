@@ -69,6 +69,7 @@ export default function ContributionGraph({ data }: { data: Contributions }) {
         <div>
             <TipLayer />
             <div
+                data-cal
                 className="overflow-x-auto pb-2"
                 role="img"
                 aria-label={`${data.total.toLocaleString("en-US")} contributions in the last year. Busiest day ${busiest.date} with ${busiest.count}.`}
@@ -88,11 +89,20 @@ export default function ContributionGraph({ data }: { data: Contributions }) {
 
                     <div className="grid" style={{ gridTemplateColumns: columns, gap: GAP }}>
                         {data.weeks.map((week, wi) => (
-                            /* content-start, or the current partial week stretches:
+                            /* --d staggers the fade one column at a time, oldest week
+                               first, so the year fills in the direction it was lived.
+                               Set here rather than in CSS because nth-child cannot
+                               count to fifty-three without fifty-three rules.
+
+                               content-start, or the current partial week stretches:
                                its single cell is the only row in that column, so it
                                takes the whole row height of the tallest column and
                                renders as one enormous square */
-                            <div key={wi} className="grid content-start" style={{ gap: GAP }}>
+                            <div
+                                key={wi}
+                                className="grid content-start"
+                                style={{ gap: GAP, ["--d" as string]: `${wi * 12}ms` }}
+                            >
                                 {week.map((day) => (
                                     <span
                                         key={day.date}

@@ -176,6 +176,12 @@ html[data-theme="dark"] {
   --dur-short: 220ms;
   --dur-long: 420ms;
 
+  /* scroll reveal. The stagger is multiplied by a child index that stops
+     counting at eight, or a long list ends up with a tail seconds deep. */
+  --rise-dur: 1000ms;
+  --rise-dist: 30px;
+  --rise-stag: 130ms;
+
   --z-base: 1;
   --z-raised: 10;
   --z-sticky: 200;

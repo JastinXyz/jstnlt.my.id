@@ -1,4 +1,5 @@
 import { cn } from "@/lib/cn";
+import Reveal from "./reveal";
 
 /* The placement, which is the thing anyone reads this list for. It used to be
  * an 11px label under a 40px year, so the least useful fact on the row was the
@@ -15,17 +16,21 @@ export default function RankBadge({ rank, className }: { rank: string; className
     const won = rank.startsWith("1st");
     const text = /^\d/.test(rank) ? `${rank} place` : rank;
 
+    /* A win fills from the left when the row arrives, the same paint-arrives
+     * idea as the highlighter band. The outlined ones stay still on purpose:
+     * then the only thing moving in this section is a first place. */
     return (
-        <span
+        <Reveal
+            as="span"
             className={cn(
                 "label inline-flex items-center rounded-xs px-2.5 py-1.5",
                 won
-                    ? "bg-accent text-paper dark:bg-accent/15 dark:text-accent-text dark:ring-1 dark:ring-accent/40"
+                    ? "badge-win text-paper dark:text-accent-text dark:ring-1 dark:ring-accent/40"
                     : "text-muted ring-1 ring-rule-strong/50",
                 className
             )}
         >
             {text}
-        </span>
+        </Reveal>
     );
 }

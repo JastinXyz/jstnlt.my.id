@@ -1,15 +1,14 @@
 "use client"
 
 import { cn } from "@/lib/cn";
-import Stagger from "./stagger";
 
 /* `03 / Open source` above the section heading. Stacked in one column, never
  * beside the heading: the tag-left / heading-right shape is the most
  * recognisable templated-editorial tell there is.
  *
- * Wrapped in Stagger so every section opens on the same beat. Without it the
- * sections that have no display heading, like the first one, had nothing
- * moving at all and read as a dead spot. */
+ * It does not animate. It used to ride in on the section reveal, which meant
+ * every eyebrow on the page moved, including the ones in sections that are
+ * meant to sit still. */
 export default function SectionEyebrow({
     index,
     label,
@@ -23,7 +22,7 @@ export default function SectionEyebrow({
     className?: string;
 }) {
     return (
-        <Stagger className={cn("mb-6", className)}>
+        <div className={cn("mb-6", className)}>
             <p className="label flex items-center gap-3">
                 {index !== undefined && (
                     <span className={cn("tnum", onInk ? "text-on-panel-muted" : "text-neutral")}>
@@ -36,6 +35,6 @@ export default function SectionEyebrow({
                 />
                 <span className={onInk ? "text-on-panel" : "text-ink"}>{label}</span>
             </p>
-        </Stagger>
+        </div>
     );
 }

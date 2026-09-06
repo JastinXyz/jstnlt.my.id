@@ -5,6 +5,7 @@ import ContributionGraph from "@/components/contribution-graph";
 import Counter from "@/components/counter";
 import SectionEyebrow from "@/components/section-eyebrow";
 import Navbar from "@/components/navbar";
+import Reveal from "@/components/reveal";
 import RevealLines from "@/components/reveal-lines";
 import Stagger from "@/components/stagger";
 import achievements, { LKS_NOTE } from "@/data/achievements";
@@ -66,7 +67,7 @@ export default async function Home() {
                             </p>
                             <p className="prose mt-6">{positioning.role}</p>
 
-                            <Stagger className="mt-12 grid grid-cols-2 gap-x-6 gap-y-6 md:mt-14 md:grid-cols-4">
+                            <div className="mt-12 grid grid-cols-2 gap-x-6 gap-y-6 md:mt-14 md:grid-cols-4">
                                 <div>
                                     <p className="display tnum text-2xl leading-none md:text-3xl">2020</p>
                                     <p className="label mt-2">Coding since</p>
@@ -87,7 +88,7 @@ export default async function Home() {
                                     </p>
                                     <p className="label mt-2">Commits, 12 mo</p>
                                 </div>
-                            </Stagger>
+                            </div>
                         </div>
 
                         <Character
@@ -106,7 +107,7 @@ export default async function Home() {
                 {/* ── 2 · what I actually do ─────────────────────────────*/}
                 <section id="what-i-do" className="shell py-16 md:py-24">
                     <SectionEyebrow index={1} label="What I do" />
-                    <Stagger className="grid gap-y-10 md:grid-cols-12 md:gap-x-10">
+                    <div className="grid gap-y-10 md:grid-cols-12 md:gap-x-10">
                         <div className="prose flex flex-col gap-5 md:col-span-7">
                             {about.map((p, i) => (
                                 <p key={i} className={i === 0 ? "text-md text-ink md:text-lg" : undefined}>
@@ -134,7 +135,7 @@ export default async function Home() {
                                 </div>
                             ))}
                         </dl>
-                    </Stagger>
+                    </div>
                 </section>
 
                 {/* ── 3 · open source. Two are featured, not one: ckptw is
@@ -281,14 +282,23 @@ export default async function Home() {
                     <p className="prose mt-8 text-md text-ink md:text-lg">{affandra.lead}</p>
                     <p className="prose mt-4 text-md">{affandra.team}</p>
 
-                    <Stagger className="mt-10 grid grid-cols-3 gap-x-6">
-                        {affandra.figures.map((f) => (
-                            <div key={f.label}>
-                                <p className="display tnum text-xl leading-none md:text-4xl">{f.value}</p>
-                                <p className="label mt-2">{f.label}</p>
-                            </div>
-                        ))}
-                    </Stagger>
+                    {/* counted up rather than moved: these are numbers, and a number
+                        that climbs to its value is the only motion that says anything
+                        about it. The suffix is split off so "4 yrs" still counts. */}
+                    <div className="mt-10 grid grid-cols-3 gap-x-6">
+                        {affandra.figures.map((f) => {
+                            const n = parseInt(f.value, 10);
+                            const suffix = f.value.replace(/^[\d,.]+/, "");
+                            return (
+                                <div key={f.label}>
+                                    <p className="display tnum text-xl leading-none md:text-4xl">
+                                        {Number.isNaN(n) ? f.value : <><Counter value={n} />{suffix}</>}
+                                    </p>
+                                    <p className="label mt-2">{f.label}</p>
+                                </div>
+                            );
+                        })}
+                    </div>
 
                     {/* What the org is written in, counted live across all of it. This is
                         the one place the site carries hues outside its accent: here the
@@ -296,8 +306,8 @@ export default async function Home() {
                         hairline ring because JavaScript yellow on paper is about 1.4:1 and
                         would otherwise read as a gap. */}
                     {orgLanguages.length > 0 && (
-                        <Stagger className="mt-10">
-                            <div className="flex h-11 w-full overflow-hidden rounded-xs">
+                        <Reveal className="mt-10" always>
+                            <div data-bar className="flex h-11 w-full overflow-hidden rounded-xs">
                                 {orgLanguages.map((l) => (
                                     <span
                                         key={l.name}
@@ -318,17 +328,17 @@ export default async function Home() {
                                     </li>
                                 ))}
                             </ul>
-                        </Stagger>
+                        </Reveal>
                     )}
 
-                    <Stagger className="mt-12 grid gap-x-10 gap-y-8 md:grid-cols-2">
+                    <div className="mt-12 grid gap-x-10 gap-y-8 md:grid-cols-2">
                         {affandra.items.map((it) => (
                             <div key={it.title} className="border-t border-rule pt-5">
                                 <h3 className="display-sm text-lg">{it.title}</h3>
                                 <p className="mt-2 text-sm leading-relaxed text-muted">{it.body}</p>
                             </div>
                         ))}
-                    </Stagger>
+                    </div>
                 </section>
 
                 {/* ── 5 · the team job, second thread, named once ───────*/}
@@ -347,7 +357,7 @@ export default async function Home() {
                             </p>
                         </div>
 
-                        <Stagger className="mt-12 grid gap-x-10 gap-y-8 md:grid-cols-2">
+                        <div className="mt-12 grid gap-x-10 gap-y-8 md:grid-cols-2">
                             {productionWork.items.map((it) => (
                                 <div key={it.title} className="border-t border-rule pt-5">
                                     <h3 className="display-sm text-lg">{it.title}</h3>
@@ -356,7 +366,7 @@ export default async function Home() {
                                     </p>
                                 </div>
                             ))}
-                        </Stagger>
+                        </div>
 
                         <div className="mt-14">
                             <p className="label">Timeline</p>
@@ -394,7 +404,9 @@ export default async function Home() {
                                 <p className="prose mt-4 mb-10 text-md">
                                     Twelve months, read live from GitHub. Work and open source together.
                                 </p>
-                                <ContributionGraph data={contributions} />
+                                <Reveal always>
+                                    <ContributionGraph data={contributions} />
+                                </Reveal>
                             </div>
                         </section>
                     </>
@@ -419,7 +431,7 @@ export default async function Home() {
                                 <p className="prose self-start text-sm md:col-span-4 md:col-start-9">
                                     {national.year} ran the whole ladder: first at regency level, first
                                     in Central Java, then{" "}
-                                    <span className="mark">{national.rank.toLowerCase()} in the country</span> in{" "}
+                                    <Reveal as="span" className="mark">{national.rank.toLowerCase()} in the country</Reveal> in{" "}
                                     {national.category}, with a Medallion of Excellence for work that
                                     cleared the standard rather than for the placing alone.
                                 </p>
@@ -431,7 +443,7 @@ export default async function Home() {
                             <p className="prose text-sm md:col-span-8 md:col-start-5">{LKS_NOTE}</p>
                         </div>
 
-                        <Stagger className="mt-6 flex flex-col">
+                        <div className="mt-6 flex flex-col">
                             {lks.map((a, i) => (
                                 <div key={i} className="grid gap-x-10 gap-y-3 border-t border-rule py-7 md:grid-cols-12">
                                     <p className="flex flex-wrap items-center gap-3 md:col-span-3 md:flex-col md:items-start">
@@ -445,12 +457,12 @@ export default async function Home() {
                                     </div>
                                 </div>
                             ))}
-                        </Stagger>
+                        </div>
 
                         {otherComps.length > 0 && (
                             <>
                                 <p className="label mt-14">Outside LKS</p>
-                                <Stagger className="mt-4 flex flex-col">
+                                <div className="mt-4 flex flex-col">
                                     {otherComps.map((a, i) => (
                                         <div key={i} className="grid gap-x-10 gap-y-3 border-t border-rule py-7 md:grid-cols-12">
                                             <p className="flex flex-wrap items-center gap-3 md:col-span-3 md:flex-col md:items-start">
@@ -463,7 +475,7 @@ export default async function Home() {
                                             </div>
                                         </div>
                                     ))}
-                                </Stagger>
+                                </div>
                             </>
                         )}
 
@@ -493,6 +505,9 @@ export default async function Home() {
                                 around education or payments.
                             </p>
 
+                            {/* the only thing that moves in the contact block: five links
+                                arriving one after another, which reads as a list being
+                                handed over rather than a panel that animates */}
                             <Stagger className="mt-10 flex flex-col gap-3">
                                 {socials.map(({ href, label, handle, icon: Icon }) => (
                                     <Link key={label} href={href} target="_blank" rel="me noopener noreferrer"
