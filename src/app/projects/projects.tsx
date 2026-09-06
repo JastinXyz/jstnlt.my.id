@@ -126,11 +126,29 @@ export default async function Projects() {
                                     )}
                                 </span>
                                 <span className="text-sm text-muted md:col-span-5">{repo.description}</span>
-                                <span className="label md:col-span-2">{repo.language}</span>
-                                <span className="label tnum md:col-span-1 md:text-right">
+
+                                {/* one meta line on a phone, four columns from md up:
+                                    stacked, each of these took a line of its own and a
+                                    fourteen-row table turned into five screens */}
+                                <span className="label flex flex-wrap gap-x-3 gap-y-1 md:hidden">
+                                    {repo.language && <span>{repo.language}</span>}
+                                    {repo.stars > 0 && (
+                                        <>
+                                            <span aria-hidden="true">·</span>
+                                            <span className="tnum">{repo.stars} ★</span>
+                                        </>
+                                    )}
+                                    <span aria-hidden="true">·</span>
+                                    <span className="tnum">{year(repo.createdAt)}</span>
+                                </span>
+
+                                <span className="label hidden md:col-span-2 md:block">{repo.language}</span>
+                                <span className="label tnum hidden md:col-span-1 md:block md:text-right">
                                     {repo.stars > 0 && `${repo.stars} ★`}
                                 </span>
-                                <span className="label tnum md:col-span-1 md:text-right">{year(repo.createdAt)}</span>
+                                <span className="label tnum hidden md:col-span-1 md:block md:text-right">
+                                    {year(repo.createdAt)}
+                                </span>
                             </Link>
                         ))}
                     </Stagger>

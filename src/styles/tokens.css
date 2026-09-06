@@ -3,7 +3,7 @@
  * source-url: https://www.adianvel.me/  ·  secondary (axis-only): https://davidhaz.com/
  * observed-fonts: Hakobi Condensed + Inter + Space Grotesk  ·  observed-accent: #2638a8
  * observed-paper: #ffffff (surface #fffaf1)  ·  rhythm: unknown (URL mode)
- * drift: paper -> cool near-white + true dark · accent -> vermilion
+ * drift: paper -> cool near-white + true dark · accent -> crimson
  *        display -> Bricolage Grotesque · nav -> N6 · footer -> Ft1 · motion -> no libraries
  * type: 2 families (Bricolage Grotesque display · Geist body), no outlier
  * rev 2: palette recut hot, the warm-oat/oxblood version read as generic
@@ -34,43 +34,48 @@
   --color-on-panel: oklch(97.6% 0.002 90);
   --color-on-panel-muted: oklch(72% 0.006 265);
   --color-on-panel-rule: oklch(52% 0.006 265);
-  --color-accent-on-panel: oklch(64% 0.215 34);
-  --color-danger-on-panel: oklch(72% 0.155 26);
+  --color-accent-on-panel: oklch(61% 0.215 18);
+  --color-danger-on-panel: oklch(72% 0.155 18);
 
   /* contact shadow under the drawing of him. Without it he floats. */
   --color-char-shadow: oklch(30% 0.01 265 / 0.26);
 
   /* ── accent · one hue, used hot ───────────────────────
+     rev 3: hue 32 (vermilion) to hue 18 (crimson). Vermilion leaned orange,
+     which sat in the same warm range as the drawn character's skin and the
+     yellow print on his shirt, so the mark in the navbar fought the face
+     inside it. Crimson holds the same chroma at the same lightness, so
+     nothing lost its weight. Every value below is re-fitted, not re-hued:
      accent      fills, large display type, focus rings  (3:1 jobs)
      accent-text small text and links on paper           (4.5:1 job)
      accent-soft the highlighter band behind inline marks */
-  --color-accent: oklch(58% 0.215 32);
-  --color-accent-text: oklch(51% 0.205 32);
-  --color-accent-soft: oklch(90% 0.06 40);
+  --color-accent: oklch(58% 0.215 18);
+  --color-accent-text: oklch(54.5% 0.205 18);
+  --color-accent-soft: oklch(90% 0.052 18);
   /* the accent, retuned for the ink panel: ink inverts per theme, so this must too */
-  --color-focus: oklch(55% 0.215 32);
-  --color-danger: oklch(48% 0.17 22);
+  --color-focus: oklch(55% 0.215 18);
+  --color-danger: oklch(48% 0.17 18);
 
   /* ── language ramp ───────────────────────────────────
      One hue, seven steps. The language bars are a data series, so they
      read as a single scale rather than a rainbow, which is also what
      stops the page looking like the site it learned from. Steps 1-2 take
      paper text; 3-7 take ink. Verified, not guessed. */
-  --color-lang-1: oklch(46% 0.205 32);
-  --color-lang-2: oklch(56% 0.215 32);
-  --color-lang-3: oklch(66% 0.195 32);
-  --color-lang-4: oklch(75% 0.155 34);
-  --color-lang-5: oklch(83% 0.115 36);
-  --color-lang-6: oklch(89% 0.075 38);
-  --color-lang-7: oklch(94% 0.042 40);
+  --color-lang-1: oklch(46% 0.185 18);
+  --color-lang-2: oklch(56% 0.215 18);
+  --color-lang-3: oklch(66% 0.195 18);
+  --color-lang-4: oklch(75% 0.152 18);
+  --color-lang-5: oklch(83% 0.095 18);
+  --color-lang-6: oklch(89% 0.058 18);
+  --color-lang-7: oklch(94% 0.03 18);
 
   /* Contribution calendar ramp: five discrete steps up the accent hue.
      GitHub's own green would be the only other hue on the page. */
   --color-grid-0: oklch(91% 0.004 90);
-  --color-grid-1: oklch(84% 0.065 32);
-  --color-grid-2: oklch(73% 0.135 32);
-  --color-grid-3: oklch(63% 0.19 32);
-  --color-grid-4: oklch(52% 0.215 32);
+  --color-grid-1: oklch(84% 0.065 18);
+  --color-grid-2: oklch(73% 0.135 18);
+  --color-grid-3: oklch(63% 0.19 18);
+  --color-grid-4: oklch(52% 0.209 18);
 
   /* ── type ─────────────────────────────────────────────
      Two families, which typography.md calls canonical. Labels are the
@@ -137,21 +142,21 @@ html[data-theme="dark"] {
   --color-on-panel: oklch(94% 0.003 265);
   --color-on-panel-muted: oklch(72% 0.007 265);
   --color-on-panel-rule: oklch(58% 0.008 265);
-  --color-accent-on-panel: oklch(70% 0.19 34);
-  --color-danger-on-panel: oklch(72% 0.155 26);
+  --color-accent-on-panel: oklch(66.5% 0.19 18);
+  --color-danger-on-panel: oklch(72% 0.155 18);
   --color-char-shadow: oklch(0% 0 0 / 0.42);
 
-  --color-accent: oklch(68% 0.19 34);
-  --color-accent-text: oklch(72% 0.175 34);
-  --color-accent-soft: oklch(33% 0.09 30);
-  --color-focus: oklch(70% 0.19 34);
-  --color-danger: oklch(66% 0.15 24);
+  --color-accent: oklch(60.5% 0.19 18);
+  --color-accent-text: oklch(65.5% 0.175 18);
+  --color-accent-soft: oklch(33% 0.09 18);
+  --color-focus: oklch(63% 0.19 18);
+  --color-danger: oklch(66% 0.15 18);
 
   --color-grid-0: oklch(24% 0.006 265);
-  --color-grid-1: oklch(34% 0.085 32);
-  --color-grid-2: oklch(46% 0.135 32);
-  --color-grid-3: oklch(58% 0.175 32);
-  --color-grid-4: oklch(71% 0.19 32);
+  --color-grid-1: oklch(34% 0.085 18);
+  --color-grid-2: oklch(46% 0.135 18);
+  --color-grid-3: oklch(58% 0.175 18);
+  --color-grid-4: oklch(71% 0.184 18);
 }
 
 /* ── tokens Tailwind doesn't namespace ──────────────────*/

@@ -229,7 +229,7 @@ export default async function Home() {
                                         ) : (
                                             <span className="label grid aspect-[16/10] w-[88px] place-items-center bg-paper-3">bot</span>
                                         )}
-                                        <span className="display-sm text-lg transition-colors duration-150 group-hover:text-accent-text">
+                                        <span className="display-sm min-w-0 text-lg break-words transition-colors duration-150 group-hover:text-accent-text">
                                             {h.name}
                                         </span>
                                         <span className="col-start-2 text-sm text-muted md:col-start-auto">

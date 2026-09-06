@@ -27,8 +27,8 @@ export const viewport: Viewport = {
   // literal values, kept in sync with --color-paper in tokens.css
   // (the browser chrome needs a concrete colour, not a var())
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f9f2e9" },
-    { media: "(prefers-color-scheme: dark)", color: "#160f0c" },
+    { media: "(prefers-color-scheme: light)", color: "#f7f7f6" },
+    { media: "(prefers-color-scheme: dark)", color: "#0c0d0f" },
   ],
 }
 

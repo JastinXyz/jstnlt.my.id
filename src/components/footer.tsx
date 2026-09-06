@@ -22,7 +22,10 @@ export default function Footer() {
 
                 <FooterCharacter className="pointer-events-none absolute top-0 right-[2%] h-[150px] md:h-[190px]" />
 
-                <div className="flex max-w-[68%] flex-wrap items-baseline gap-x-4 gap-y-2 pt-5 pb-28 md:pb-32">
+                {/* the lane under the rule on the right belongs to his legs, so the
+                    colophon is padded away from it rather than capped at a
+                    percentage that goes unreadable on a phone */}
+                <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2 pt-5 pr-24 pb-28 md:pr-40 md:pb-32">
                     <p className="label">© {new Date().getFullYear()} Jastin Linggar Tama</p>
                     <span aria-hidden="true" className="label">·</span>
                     <a
