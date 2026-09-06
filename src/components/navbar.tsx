@@ -244,7 +244,7 @@ export default function Navbar({ page, lost = false }: { page?: page; lost?: boo
                                             </span>
                                             <span
                                                 className={cn(
-                                                    "display mt-1 block text-[clamp(2rem,10vw,3rem)] uppercase leading-[0.95] transition-colors duration-150",
+                                                    "display mt-1 block text-[clamp(1.75rem,8vw,2.5rem)] uppercase leading-[0.95] transition-colors duration-150",
                                                     active ? "text-accent" : "hover:text-accent-text",
                                                 )}
                                             >
