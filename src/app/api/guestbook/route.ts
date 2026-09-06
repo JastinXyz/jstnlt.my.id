@@ -42,7 +42,7 @@ export async function POST(req: Request) {
             let toinsert = {
                 content: body.message,
                 timestamp: Date.now(),
-                user: { name: session?.user?.name },
+                user: { name: session?.user?.name, image: session?.user?.image },
             };
     
             await guestbook.insertOne(toinsert);

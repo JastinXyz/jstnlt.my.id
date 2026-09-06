@@ -1,8 +1,8 @@
 import { cn } from "@/lib/cn";
-import { fieldClass } from "./input";
+import { fieldClass, FieldSurface } from "./input";
 
-type TextareaProps = React.ComponentProps<"textarea"> & { onInk?: boolean };
+type TextareaProps = React.ComponentProps<"textarea"> & { surface?: FieldSurface };
 
-export default function Textarea({ className, onInk, ...props }: TextareaProps) {
-    return <textarea className={cn(fieldClass(onInk), "h-32 resize-y leading-relaxed", className)} {...props} />;
+export default function Textarea({ className, surface, ...props }: TextareaProps) {
+    return <textarea className={cn(fieldClass(surface), "h-32 resize-y leading-relaxed", className)} {...props} />;
 }

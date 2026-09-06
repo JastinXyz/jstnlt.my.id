@@ -18,10 +18,25 @@ const base = [
     "disabled:opacity-45 disabled:cursor-not-allowed",
 ].join(" ");
 
+/* The fill has to differ from whatever the field is sitting on. On plain paper
+ * that means a paper-2 fill; inside a paper-2 block the same fill disappears,
+ * so there it flips to paper and takes a hairline as well, because a fill that
+ * is lighter than its surroundings reads as a gap without one. */
 const onPaper = [
     "bg-paper-2 text-ink placeholder:text-neutral",
     "hover:bg-paper-3",
     "focus:border-accent focus:bg-paper",
+    "aria-[invalid=true]:border-danger",
+].join(" ");
+
+const onPaper2 = [
+    "bg-paper text-ink placeholder:text-neutral",
+    /* colour the 2px border that is already there rather than adding a ring
+       inside it: the field paints its background under a transparent border,
+       so an inset ring leaves 2px of fill stranded outside the line */
+    "border-rule",
+    "hover:border-rule-strong",
+    "focus:border-accent",
     "aria-[invalid=true]:border-danger",
 ].join(" ");
 
@@ -32,10 +47,13 @@ const onInkSurface = [
     "aria-[invalid=true]:border-danger-on-panel",
 ].join(" ");
 
-export const fieldClass = (onInk?: boolean) => cn(base, onInk ? onInkSurface : onPaper);
+export type FieldSurface = "paper" | "paper-2" | "panel";
 
-type InputProps = React.ComponentProps<"input"> & { onInk?: boolean };
+export const fieldClass = (surface: FieldSurface = "paper") =>
+    cn(base, surface === "panel" ? onInkSurface : surface === "paper-2" ? onPaper2 : onPaper);
 
-export default function Input({ className, onInk, ...props }: InputProps) {
-    return <input className={cn(fieldClass(onInk), className)} {...props} />;
+type InputProps = React.ComponentProps<"input"> & { surface?: FieldSurface };
+
+export default function Input({ className, surface, ...props }: InputProps) {
+    return <input className={cn(fieldClass(surface), className)} {...props} />;
 }

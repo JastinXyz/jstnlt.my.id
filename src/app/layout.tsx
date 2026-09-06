@@ -52,7 +52,35 @@ export default async function RootLayout({
         <Providers session={session}>
           <ThemeProvider attribute="data-theme">
             <SmoothScroll />
-            <Toaster richColors position="bottom-right" />
+            {/* Sonner ships rounded corners, a drop shadow and its own green and
+                red. None of that exists anywhere else here, so the defaults are
+                turned off and the toast is built from the same panel surface as
+                the contact block: square corners, a hairline border, and the
+                accent only as a rule down the left edge. */}
+            <Toaster
+              position="bottom-right"
+              offset={20}
+              gap={8}
+              toastOptions={{
+                unstyled: true,
+                classNames: {
+                  toast:
+                    "flex w-full items-start gap-3 rounded-xs border border-on-panel-rule border-l-2 bg-panel px-4 py-3 font-body text-sm leading-relaxed text-on-panel",
+                  /* the left rule carries success or failure, so the stock
+                     check and cross would be saying it twice */
+                  icon: "hidden",
+                  title: "font-medium",
+                  description: "mt-0.5 text-on-panel-muted",
+                  success: "border-l-accent-on-panel",
+                  error: "border-l-danger-on-panel",
+                  info: "border-l-on-panel-rule",
+                  warning: "border-l-danger-on-panel",
+                  actionButton: "label rounded-xs bg-on-panel px-2.5 py-1 text-panel",
+                  cancelButton: "label text-on-panel-muted",
+                  closeButton: "text-on-panel-muted hover:text-on-panel",
+                },
+              }}
+            />
             {children}
             <Footer />
           </ThemeProvider>

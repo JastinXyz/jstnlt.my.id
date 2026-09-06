@@ -36,7 +36,7 @@ export default function ContactForm({ className }: { className?: string }) {
                 <div>
                     <label htmlFor="name" className="label text-on-panel-muted">Name</label>
                     <Input
-                        onInk
+                        surface="panel"
                         type="text"
                         id="name"
                         autoComplete="name"
@@ -50,7 +50,7 @@ export default function ContactForm({ className }: { className?: string }) {
                 <div>
                     <label htmlFor="email" className="label text-on-panel-muted">Email address</label>
                     <Input
-                        onInk
+                        surface="panel"
                         type="email"
                         id="email"
                         autoComplete="email"
@@ -66,7 +66,7 @@ export default function ContactForm({ className }: { className?: string }) {
             <div className="mt-4">
                 <label htmlFor="message" className="label text-on-panel-muted">Message</label>
                 <Textarea
-                    onInk
+                    surface="panel"
                     id="message"
                     aria-invalid={!!errors.message}
                     aria-describedby="message-error"
