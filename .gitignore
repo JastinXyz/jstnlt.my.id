@@ -40,3 +40,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local working files, not part of the site
+/.claude
+/.hallmark
+# the scratch page used to review design changes; served locally, never shipped
+/public/proposals.html

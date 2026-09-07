@@ -6,13 +6,21 @@ throw new Error('Invalid/Missing environment variable: "MONGODB_URI"')
 }
  
 const uri = process.env.MONGODB_URI
-const options = {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-}
+
+/* Stable API only for Atlas. Against a local mongod, strict mode rejects
+ * anything outside the versioned command set, which includes commands the
+ * NextAuth adapter runs when it creates its indexes. mongodb:// on localhost
+ * is a development database, so it gets the plain client. */
+const isAtlas = uri.startsWith("mongodb+srv://")
+const options = isAtlas
+  ? {
+      serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+      },
+    }
+  : {}
  
 let db: MongoClient
  

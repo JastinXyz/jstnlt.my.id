@@ -1,38 +1,417 @@
+/* Hallmark · genre: editorial · macrostructure: Marquee Hero
+ * theme: studied-DNA (source: url https://www.adianvel.me/) · nav: N6 · footer: Ft1
+ * enrichment: none · tokens live in ../styles/tokens.css
+ */
 @import "tailwindcss";
+@import "../styles/tokens.css";
 
 @variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-@theme {
-  --color-primary-50: #F5F7FA;
-  --color-primary-100: #EAEDF4;
-  --color-primary-200: #D1D9E6;
-  --color-primary-300: #A8B9D1;
-  --color-primary-400: #7993B7;
-  --color-primary-500: #58769F;
-  --color-primary-600: #455E84;
-  --color-primary-700: #384B6C;
-  --color-primary-800: #32415A;
-  --color-primary-900: #2D384D;
-  --color-primary-950: #1E2533;
+/* Everything custom lives in a layer. Unlayered CSS outranks every
+ * Tailwind utility, so an unlayered `.label { color: … }` would beat
+ * `text-accent` on the same element, so layering keeps utilities winning. */
 
-  --color-shark-50: #f6f6f6;
-  --color-shark-100: #e7e7e7;
-  --color-shark-200: #d1d1d1;
-  --color-shark-300: #b0b0b0;
-  --color-shark-400: #888888;
-  --color-shark-500: #6d6d6d;
-  --color-shark-600: #5d5d5d;
-  --color-shark-700: #4f4f4f;
-  --color-shark-800: #454545;
-  --color-shark-900: #3d3d3d;
-  --color-shark-950: #1f1f1f;
+@layer base {
+  html,
+  body {
+    /* clip, never hidden: hidden would kill position: sticky */
+    overflow-x: clip;
+  }
 
+  /* Lenis owns scrolling; scroll-behavior: smooth fights it. */
 
+  /* the rail jumps to section ids; keep the heading off the very top edge */
+  section[id] {
+    scroll-margin-top: 2.5rem;
+  }
 
-  --font-geist: 'Geist', sans-serif;
-  --font-geist-mono: 'Geist Mono', sans-serif;
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    /* never transitioned: the ring is instant or it is useless */
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
+    border-radius: var(--radius-xs);
+  }
 }
 
-.highlight {
-  @apply bg-primary-400 dark:bg-primary-500 text-white px-[0.25rem] font-geist-mono text-sm;
-} 
+@layer components {
+  /* ── page shell ───────────────────────────────────────
+     Sections that change surface run full-bleed and put .shell
+     on their inner wrapper instead. */
+
+  .shell {
+    width: min(100%, 72rem);
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 3rem);
+  }
+
+  /* ── display type ─────────────────────────────────────
+     Bricolage carries a width axis; 78 % is the condensed
+     register the whole page is set in. */
+
+  .display {
+    font-family: var(--font-display);
+    font-stretch: 78%;
+    font-weight: 800;
+    letter-spacing: var(--tracking-display);
+    line-height: 0.88;
+    /* long project names break inside the word, not past the viewport */
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+
+  .display-sm {
+    font-family: var(--font-display);
+    font-stretch: 82%;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+
+  .label {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-neutral);
+  }
+
+  .prose {
+    max-width: 62ch;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* The only rule left on the page. Surfaces do the rest of the dividing. */
+  .rule {
+    border: 0;
+    border-top: var(--rule-hair) solid var(--color-rule);
+  }
+
+  /* Highlighter band. A flat background fills the whole line box and reads
+     as a block; the gradient keeps the ink behind the x-height, the way a
+     real marker lands. */
+  /* The band is a gradient, so it can be swept: the painted width goes from
+     nothing to full, left to right, the way a marker is actually dragged.
+     Nothing moves, nothing fades, only the paint arrives. */
+  .js-motion .mark {
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+    transition: background-size 700ms var(--ease-out);
+  }
+
+  .js-motion .mark.is-in {
+    background-size: 100% 100%;
+  }
+
+  .mark {
+    background-image: linear-gradient(
+      180deg,
+      transparent 34%,
+      var(--color-accent-soft) 34%,
+      var(--color-accent-soft) 92%,
+      transparent 92%
+    );
+    color: var(--color-ink);
+    padding-inline: 0.22em;
+    font-weight: 500;
+  }
+
+  /* ── scroll reveal ────────────────────────────────────
+     Parked in CSS and gated on .js-motion, which an inline script in the head
+     sets before first paint. Two reasons, both learned the hard way: parking
+     in JavaScript flashes the content before hydration, and gating on the
+     class means that if the script never runs, nothing is ever hidden.
+
+     No measurement of any kind happens here. The earlier attempt read element
+     offsets at mount, which the forty-odd remote images invalidated as they
+     loaded. This is a class toggle and two transitions. */
+
+  .js-motion [data-rise] {
+    opacity: 0;
+    transform: translateY(var(--rise-dist));
+    transition:
+      opacity var(--rise-dur) var(--ease-out),
+      transform var(--rise-dur) var(--ease-out);
+    transition-delay: calc(var(--i, 0) * var(--rise-stag));
+  }
+
+  .js-motion [data-rise].is-in,
+  .js-motion .is-in [data-rise] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* on screen at load: released with no transition at all */
+  .js-motion .no-rise[data-rise],
+  .js-motion .no-rise [data-rise] {
+    transition: none;
+  }
+
+  /* A first place fills from the left. Painted as a gradient rather than a
+     background colour so the same background-size trick as the highlighter
+     works on it; without motion it is simply a filled block. */
+  .badge-win {
+    background-image: linear-gradient(90deg, var(--color-accent) 0 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+
+  .js-motion .badge-win {
+    background-size: 0% 100%;
+    transition: background-size 620ms var(--ease-out);
+  }
+
+  .js-motion .badge-win.is-in {
+    background-size: 100% 100%;
+  }
+
+  :root[data-theme="dark"] .badge-win {
+    background-image: linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--color-accent) 15%, transparent) 0 100%
+    );
+  }
+
+  /* The calendar fills in column by column, oldest week first. The cells only
+     fade: moving three hundred and seventy-one squares is a different thing
+     entirely, and the grid has to stay a grid while it arrives. */
+  .js-motion [data-cal] .cal-cell {
+    opacity: 0;
+    transition: opacity 320ms var(--ease-out);
+    transition-delay: var(--d, 0ms);
+  }
+  .js-motion .is-in [data-cal] .cal-cell {
+    opacity: 1;
+  }
+  .js-motion .no-rise [data-cal] .cal-cell {
+    transition: none;
+  }
+
+  /* The language bar fills rather than rises: it is a measurement, and a
+     measurement that slides up from nowhere says nothing, while one that grows
+     from zero says what it is. Segments start one after another, left to
+     right, in the order they are stacked. */
+  .js-motion [data-bar] > * {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 900ms var(--ease-out);
+  }
+  .js-motion .is-in [data-bar] > * {
+    transform: scaleX(1);
+  }
+  .js-motion .is-in [data-bar] > *:nth-child(2) { transition-delay: 90ms; }
+  .js-motion .is-in [data-bar] > *:nth-child(3) { transition-delay: 180ms; }
+  .js-motion .is-in [data-bar] > *:nth-child(4) { transition-delay: 260ms; }
+  .js-motion .is-in [data-bar] > *:nth-child(5) { transition-delay: 330ms; }
+  .js-motion .is-in [data-bar] > *:nth-child(n + 6) { transition-delay: 390ms; }
+  .js-motion .no-rise [data-bar] > * {
+    transition: none;
+  }
+
+  /* children of a stagger group are the animated elements themselves */
+  .js-motion [data-stagger] > * {
+    opacity: 0;
+    transform: translateY(var(--rise-dist));
+    transition:
+      opacity var(--rise-dur) var(--ease-out),
+      transform var(--rise-dur) var(--ease-out);
+    transition-delay: calc(var(--i, 0) * var(--rise-stag));
+  }
+  .js-motion [data-stagger].is-in > * {
+    opacity: 1;
+    transform: none;
+  }
+  .js-motion [data-stagger].no-rise > * {
+    transition: none;
+  }
+
+  /* the index that drives the stagger, counted in CSS so no JavaScript has to
+     walk the children */
+  .js-motion [data-stagger] > *:nth-child(1) { --i: 0; }
+  .js-motion [data-stagger] > *:nth-child(2) { --i: 1; }
+  .js-motion [data-stagger] > *:nth-child(3) { --i: 2; }
+  .js-motion [data-stagger] > *:nth-child(4) { --i: 3; }
+  .js-motion [data-stagger] > *:nth-child(5) { --i: 4; }
+  .js-motion [data-stagger] > *:nth-child(6) { --i: 5; }
+  .js-motion [data-stagger] > *:nth-child(7) { --i: 6; }
+  .js-motion [data-stagger] > *:nth-child(n + 8) { --i: 7; }
+
+  /* ── the drawing of him ───────────────────────────────
+     One flat illustration per pose, stacked and cross-faded. The three idle
+     rhythms run on unrelated periods so the loop never lines up with itself;
+     the lean is applied to the whole figure at once, because anything that
+     bends a joint needs the art cut into layers, and a cut at the neck or the
+     shoulder shows as a seam the moment it moves. */
+
+  .char {
+    line-height: 0;
+  }
+  .char__lean {
+    position: relative;
+    height: 100%;
+    width: fit-content;
+    transform: translateX(calc(var(--lean, 0) * 9px)) rotate(calc(var(--lean, 0) * 1.6deg));
+    transform-origin: 50% 100%;
+    transition: transform 600ms var(--ease-out);
+  }
+  .char__shift {
+    height: 100%;
+    animation: char-shift 9.1s ease-in-out infinite;
+  }
+  .char__sway {
+    position: relative;
+    height: 100%;
+    aspect-ratio: var(--char-ratio);
+    transform-origin: 50% 100%;
+    animation: char-sway 6.7s ease-in-out infinite;
+  }
+  .char__sway[role="button"] {
+    cursor: pointer;
+  }
+  .char__frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 140ms linear;
+    animation: char-breathe 4.6s ease-in-out infinite;
+    transform-origin: 50% 100%;
+  }
+  .char__frame.is-on {
+    opacity: 1;
+  }
+  /* Mid-wave the two frames are swapped outright. Cross-fading them puts two
+     half-transparent images over the page for one frame, which reads as a
+     white blink at 260 ms intervals. */
+  .char--snap .char__frame {
+    transition: none;
+  }
+  .char__shadow {
+    position: absolute;
+    inset-inline: 12%;
+    bottom: -5px;
+    height: 9px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, var(--color-char-shadow), transparent 70%);
+    animation: char-shadow 4.6s ease-in-out infinite;
+  }
+
+  /* Dark mode only. The drawing is outlined in near black, which on a near
+     black page dissolves: the shoulder and the outside of the jeans lose their
+     edge entirely. One pixel of light around the silhouette gives it back.
+     The brightness is left alone on purpose; the shirt reads as white because
+     it is white. */
+  :root[data-theme="dark"] .char__frame,
+  :root[data-theme="dark"] .char-art {
+    filter: drop-shadow(0 0 1px oklch(100% 0 0 / 0.45));
+  }
+
+  @keyframes char-breathe {
+    0%,
+    100% {
+      transform: translateY(0) scaleY(1);
+    }
+    50% {
+      transform: translateY(-3px) scaleY(1.006);
+    }
+  }
+  @keyframes char-sway {
+    0%,
+    100% {
+      transform: rotate(-0.9deg);
+    }
+    50% {
+      transform: rotate(0.9deg);
+    }
+  }
+  @keyframes char-shift {
+    0%,
+    100% {
+      transform: translateX(-3px);
+    }
+    50% {
+      transform: translateX(3px);
+    }
+  }
+  @keyframes char-shadow {
+    0%,
+    100% {
+      transform: scaleX(1);
+      opacity: 0.9;
+    }
+    50% {
+      transform: scaleX(0.94);
+      opacity: 0.7;
+    }
+  }
+
+  /* Sibling-hover on the language chart: the hovered band takes the room,
+     the rest give it up. CSS only, no JS, and it simply doesn't fire on
+     touch, where there is no hover to begin with. */
+  .langbar {
+    transition: flex-grow var(--dur-long) var(--ease-out);
+  }
+  .langbar__n {
+    transition: opacity var(--dur-short) var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .langbars:hover .langbar {
+      flex-grow: 0.5;
+    }
+    .langbars .langbar:hover {
+      flex-grow: 4;
+    }
+    .langbars .langbar:hover .langbar__n {
+      opacity: 1;
+    }
+  }
+
+}
+
+/* ── theme toggle · circular reveal ─────────────────────*/
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 0;
+}
+::view-transition-new(root) {
+  z-index: 1;
+}
+
+/* ── reduced motion ─────────────────────────────────────
+   Unlayered on purpose: this must outrank everything. */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

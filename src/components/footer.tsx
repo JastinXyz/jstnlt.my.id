@@ -1,7 +1,51 @@
+import FooterCharacter from "./footer-character";
+
+/* The contact panel directly above this already carries all five social links,
+ * their handles and a form. Repeating them here was the whole problem with the
+ * old footer, so what is left is the colophon and him: he opens the page in the
+ * hero and closes it sitting on the last rule.
+ *
+ * The colophon is kept to the left of the page. The lane under the rule on the
+ * right belongs to his legs. */
 export default function Footer() {
     return (
-        <footer className="mt-20">
-            <p className="text-neutral-700 dark:text-neutral-300 text-center">copyright © {new Date().getFullYear()} <span className="hover:text-primary-400">jstnlt</span>.</p>
+        <footer className="shell pt-14 pb-4 md:pt-20">
+            {/* his head and shoulders sit above the rule, so the two lines here
+                have to keep out of that column or they run under him */}
+            <p className="display-sm pr-24 text-lg md:pr-32">Thanks for reading this far.</p>
+            {/* The footer is in the layout, so this has to read the same on the
+                work list, the awards page and the 404. Nothing about "above". */}
+            <p className="prose mt-2 max-w-[42ch] pr-24 text-sm md:pr-32">
+                Still building. Purwokerto, Indonesia.
+            </p>
+
+            <div className="relative mt-8">
+                <div className="rule" />
+
+                <FooterCharacter className="pointer-events-none absolute top-0 right-[2%] h-[150px] md:h-[190px]" />
+
+                {/* the lane under the rule on the right belongs to his legs, so the
+                    colophon is padded away from it rather than capped at a
+                    percentage that goes unreadable on a phone */}
+                <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2 pt-5 pr-24 pb-28 md:pr-40 md:pb-32">
+                    <p className="label">© {new Date().getFullYear()} Jastin Linggar Tama</p>
+                    {/* a phone already has its own way back to the top, and the
+                        link sat under his dangling feet */}
+                    <span aria-hidden="true" className="label hidden sm:inline">·</span>
+                    <a
+                        href="#top"
+                        className="label group hidden whitespace-nowrap transition-colors duration-150 hover:text-accent-text sm:inline-flex"
+                    >
+                        Back to top{" "}
+                        <span
+                            aria-hidden="true"
+                            className="ml-1 inline-block transition-transform duration-200 ease-out group-hover:-translate-y-0.5"
+                        >
+                            ↑
+                        </span>
+                    </a>
+                </div>
+            </div>
         </footer>
-    )
+    );
 }

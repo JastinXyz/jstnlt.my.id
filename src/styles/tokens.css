@@ -1,0 +1,191 @@
+/* Hallmark · genre: editorial · macrostructure: Marquee Hero
+ * theme: studied-DNA (source: url https://www.adianvel.me/)
+ * source-url: https://www.adianvel.me/  ·  secondary (axis-only): https://davidhaz.com/
+ * observed-fonts: Hakobi Condensed + Inter + Space Grotesk  ·  observed-accent: #2638a8
+ * observed-paper: #ffffff (surface #fffaf1)  ·  rhythm: unknown (URL mode)
+ * drift: paper -> cool near-white + true dark · accent -> crimson
+ *        display -> Bricolage Grotesque · nav -> N6 · footer -> Ft1 · motion -> no libraries
+ * type: 2 families (Bricolage Grotesque display · Geist body), no outlier
+ * rev 2: palette recut hot, the warm-oat/oxblood version read as generic
+ *        editorial. Surfaces now carry the dividing that hairlines carried.
+ * pre-emit critique: P5 H5 E5 S5 R5 V5
+ */
+
+@theme {
+  /* ── surfaces · light ─────────────────────────────────
+     Near-neutral, barely tinted. The page is white; the accent is the
+     only chromatic event. Separation comes from surface steps, not from
+     rules, which is why there are three paper levels and one rule. */
+  --color-paper: oklch(97.6% 0.002 90);
+  --color-paper-2: oklch(93.5% 0.003 90);
+  --color-paper-3: oklch(89% 0.004 90);
+  --color-rule: oklch(87% 0.004 265);
+  --color-rule-strong: oklch(61% 0.006 265);
+  --color-neutral: oklch(51% 0.008 265);
+  --color-muted: oklch(40% 0.008 265);
+  --color-ink: oklch(17% 0.006 265);
+
+  /* The dark panel (contact block, tooltip). Deliberately NOT `ink`: ink
+     inverts with the theme, so a panel painted with it turned into a white
+     slab in the middle of a dark page. A panel is dark in both themes; in
+     dark mode it simply reads as a raised surface instead of an inversion. */
+  --color-panel: oklch(17% 0.006 265);
+  --color-panel-2: oklch(23% 0.008 265);
+  --color-on-panel: oklch(97.6% 0.002 90);
+  --color-on-panel-muted: oklch(72% 0.006 265);
+  --color-on-panel-rule: oklch(52% 0.006 265);
+  --color-accent-on-panel: oklch(61% 0.215 18);
+  --color-danger-on-panel: oklch(72% 0.155 18);
+
+  /* contact shadow under the drawing of him. Without it he floats. */
+  --color-char-shadow: oklch(30% 0.01 265 / 0.26);
+
+  /* ── accent · one hue, used hot ───────────────────────
+     rev 3: hue 32 (vermilion) to hue 18 (crimson). Vermilion leaned orange,
+     which sat in the same warm range as the drawn character's skin and the
+     yellow print on his shirt, so the mark in the navbar fought the face
+     inside it. Crimson holds the same chroma at the same lightness, so
+     nothing lost its weight. Every value below is re-fitted, not re-hued:
+     accent      fills, large display type, focus rings  (3:1 jobs)
+     accent-text small text and links on paper           (4.5:1 job)
+     accent-soft the highlighter band behind inline marks */
+  --color-accent: oklch(58% 0.215 18);
+  --color-accent-text: oklch(54.5% 0.205 18);
+  --color-accent-soft: oklch(90% 0.052 18);
+  /* the accent, retuned for the ink panel: ink inverts per theme, so this must too */
+  --color-focus: oklch(55% 0.215 18);
+  --color-danger: oklch(48% 0.17 18);
+
+  /* ── language ramp ───────────────────────────────────
+     One hue, seven steps. The language bars are a data series, so they
+     read as a single scale rather than a rainbow, which is also what
+     stops the page looking like the site it learned from. Steps 1-2 take
+     paper text; 3-7 take ink. Verified, not guessed. */
+  --color-lang-1: oklch(46% 0.185 18);
+  --color-lang-2: oklch(56% 0.215 18);
+  --color-lang-3: oklch(66% 0.195 18);
+  --color-lang-4: oklch(75% 0.152 18);
+  --color-lang-5: oklch(83% 0.095 18);
+  --color-lang-6: oklch(89% 0.058 18);
+  --color-lang-7: oklch(94% 0.03 18);
+
+  /* Contribution calendar ramp: five discrete steps up the accent hue.
+     GitHub's own green would be the only other hue on the page. */
+  --color-grid-0: oklch(91% 0.004 90);
+  --color-grid-1: oklch(84% 0.065 18);
+  --color-grid-2: oklch(73% 0.135 18);
+  --color-grid-3: oklch(63% 0.19 18);
+  --color-grid-4: oklch(52% 0.209 18);
+
+  /* ── type ─────────────────────────────────────────────
+     Two families, which typography.md calls canonical. Labels are the
+     body face tracked out and uppercased rather than a mono register. */
+  --font-display: "Bricolage Grotesque", "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Geist", ui-sans-serif, system-ui, sans-serif;
+
+  /* Major third · 1.25. Every size ships its own line-height, because Tailwind
+     keeps its default pairing otherwise, and a 1.375rem size inherits the
+     ratio meant for 1.125rem. Sizes lg and up are the display range. */
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1.4;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.6;
+  --text-base: 1rem;
+  --text-base--line-height: 1.65;
+  --text-md: 1.125rem;
+  --text-md--line-height: 1.6;
+  --text-lg: 1.375rem;
+  --text-lg--line-height: 1.15;
+  --text-xl: 1.75rem;
+  --text-xl--line-height: 1.1;
+  --text-2xl: 2.25rem;
+  --text-2xl--line-height: 1.05;
+  --text-3xl: 3rem;
+  --text-3xl--line-height: 1;
+  --text-display-s: clamp(2rem, 5vw + 0.5rem, 3.25rem);
+  --text-display-s--line-height: 1;
+  --text-display: clamp(2.75rem, 8vw, 5.5rem);
+  --text-display--line-height: 0.9;
+
+  --tracking-label: 0.18em;
+  --tracking-display: -0.035em;
+
+  /* ── shape ────────────────────────────────────────────
+     Near-square. The DNA's 24–30px radius is its signature, not ours. */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+
+  /* ── motion ───────────────────────────────────────────*/
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* ── dark ───────────────────────────────────────────────
+   Same anchor hue. Only lightness and chroma move.
+   Elevation goes *lighter*, never darker. */
+html[data-theme="dark"] {
+  --color-paper: oklch(16% 0.005 265);
+  --color-paper-2: oklch(21% 0.006 265);
+  --color-paper-3: oklch(25.5% 0.007 265);
+  --color-rule: oklch(30% 0.006 265);
+  --color-rule-strong: oklch(53% 0.008 265);
+  --color-neutral: oklch(64% 0.008 265);
+  --color-muted: oklch(76% 0.006 265);
+  --color-ink: oklch(94% 0.003 265);
+
+  /* still dark, just lifted off the page rather than inverted */
+  --color-panel: oklch(27% 0.009 265);
+  --color-panel-2: oklch(34% 0.010 265);
+  --color-on-panel: oklch(94% 0.003 265);
+  --color-on-panel-muted: oklch(72% 0.007 265);
+  --color-on-panel-rule: oklch(58% 0.008 265);
+  --color-accent-on-panel: oklch(66.5% 0.19 18);
+  --color-danger-on-panel: oklch(72% 0.155 18);
+  --color-char-shadow: oklch(0% 0 0 / 0.42);
+
+  --color-accent: oklch(60.5% 0.19 18);
+  --color-accent-text: oklch(65.5% 0.175 18);
+  --color-accent-soft: oklch(33% 0.09 18);
+  --color-focus: oklch(63% 0.19 18);
+  --color-danger: oklch(66% 0.15 18);
+
+  --color-grid-0: oklch(24% 0.006 265);
+  --color-grid-1: oklch(34% 0.085 18);
+  --color-grid-2: oklch(46% 0.135 18);
+  --color-grid-3: oklch(58% 0.175 18);
+  --color-grid-4: oklch(71% 0.184 18);
+}
+
+/* ── tokens Tailwind doesn't namespace ──────────────────*/
+:root {
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+  --space-4xl: 9rem;
+
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long: 420ms;
+
+  /* scroll reveal. The stagger is multiplied by a child index that stops
+     counting at eight, or a long list ends up with a tail seconds deep. */
+  --rise-dur: 1000ms;
+  --rise-dist: 30px;
+  --rise-stag: 130ms;
+
+  --z-base: 1;
+  --z-raised: 10;
+  --z-sticky: 200;
+  --z-toast: 500;
+
+  --rule-hair: 1px;
+}
