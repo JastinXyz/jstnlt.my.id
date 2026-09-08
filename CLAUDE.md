@@ -62,9 +62,20 @@ on-a-team paper-2 · commits paper · competitions paper-2 · contact panel · f
 The calendar section must stay on `paper`: its empty cells are `oklch(91%)`, only 2.5% off
 `paper-2` but 6.6% off `paper`.
 
-**Type:** two families only. `Bricolage Grotesque` (display, `font-stretch: 78%`) and `Geist`
-(body). `.display` tracks `-0.035em`, which makes heavy condensed letters overlap; that is fine
-filled but shows every crossing if the type is ever outlined.
+**Type:** one webfont only. `Bricolage Grotesque` (display, `font-stretch: 78%`) over the system
+UI stack for body. `.display` tracks `-0.035em`, which makes heavy condensed letters overlap; that
+is fine filled but shows every crossing if the type is ever outlined.
+
+**Geist is not to come back**, and neither are Inter, Space Grotesk or italic Instrument Serif.
+Those four are what every generator reaches for, so they now read as machine-picked whatever the
+layout around them does. If a body face is ever wanted over the system stack, it has to be one
+with a foundry that can be named.
+
+**`.label` is sentence case.** It was uppercase at `0.18em` for 75 instances, which is the most
+templated move available in this kind of layout. The copy was already written in sentence case, so
+nothing had to be reworded when the `text-transform` came off. Size, weight and `--color-neutral`
+carry the register now. Do not put `text-transform: uppercase` back on it, and do not pair it with
+positive tracking.
 
 **Verify contrast numerically before shipping a colour.** Convert the OKLCH values to sRGB and
 compute WCAG ratios; do not eyeball it. Body text 4.5:1, large text and UI boundaries 3:1.

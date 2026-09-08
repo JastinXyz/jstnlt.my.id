@@ -10,10 +10,10 @@ import ThemeSwitch from "./theme-switch";
 type page = 'home' | 'achievements' | 'projects' | 'guestbook';
 
 const links: { href: string; label: string; page: page }[] = [
-    { href: '/', label: 'home', page: 'home' },
-    { href: '/projects', label: 'open source', page: 'projects' },
-    { href: '/achievements', label: 'awards', page: 'achievements' },
-    { href: '/guestbook', label: 'guestbook', page: 'guestbook' },
+    { href: '/', label: 'Home', page: 'home' },
+    { href: '/projects', label: 'Open source', page: 'projects' },
+    { href: '/achievements', label: 'Awards', page: 'achievements' },
+    { href: '/guestbook', label: 'Guestbook', page: 'guestbook' },
 ];
 
 /* One row, sticky, and translucent once it sticks: the page keeps showing

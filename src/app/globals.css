@@ -82,12 +82,21 @@
     min-width: 0;
   }
 
+  /* Small type that names a thing: section eyebrows, the caption under a
+     figure, nav, inline repo metadata.
+
+     It used to be uppercase and tracked out to 0.18em. That treatment is the
+     single most templated move in this kind of layout, and at 75 instances it
+     was the page's loudest habit rather than an accent. Sentence case says the
+     same thing, so the register is now carried by size, weight and colour
+     alone. The copy was already written in sentence case, which is why nothing
+     had to be reworded. One size up, because 11px lowercase reads smaller than
+     11px uppercase at the same measure. */
   .label {
     font-family: var(--font-body);
     font-weight: 500;
-    font-size: var(--text-2xs);
+    font-size: var(--text-xs);
     letter-spacing: var(--tracking-label);
-    text-transform: uppercase;
     color: var(--color-neutral);
   }
 

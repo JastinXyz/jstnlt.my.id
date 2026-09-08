@@ -5,7 +5,7 @@
  * observed-paper: #ffffff (surface #fffaf1)  ·  rhythm: unknown (URL mode)
  * drift: paper -> cool near-white + true dark · accent -> crimson
  *        display -> Bricolage Grotesque · nav -> N6 · footer -> Ft1 · motion -> no libraries
- * type: 2 families (Bricolage Grotesque display · Geist body), no outlier
+ * type: 1 webfont (Bricolage Grotesque, display) over the system UI face
  * rev 2: palette recut hot, the warm-oat/oxblood version read as generic
  *        editorial. Surfaces now carry the dividing that hairlines carried.
  * pre-emit critique: P5 H5 E5 S5 R5 V5
@@ -78,10 +78,16 @@
   --color-grid-4: oklch(52% 0.209 18);
 
   /* ── type ─────────────────────────────────────────────
-     Two families, which typography.md calls canonical. Labels are the
-     body face tracked out and uppercased rather than a mono register. */
-  --font-display: "Bricolage Grotesque", "Geist", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Geist", ui-sans-serif, system-ui, sans-serif;
+     One webfont and the system UI face. Bricolage carries every display
+     line; body text is whatever the OS already has, which is San Francisco,
+     Segoe UI or Roboto depending on where you are reading this.
+
+     Geist used to be the body face and is deliberately gone: it is one of the
+     four faces that read as machine-picked in 2026, alongside Inter, Space
+     Grotesk and italic Instrument Serif. The display face was never the
+     problem, so it did not move. */
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
   /* Major third · 1.25. Every size ships its own line-height, because Tailwind
      keeps its default pairing otherwise, and a 1.375rem size inherits the
@@ -109,7 +115,7 @@
   --text-display: clamp(2.75rem, 8vw, 5.5rem);
   --text-display--line-height: 0.9;
 
-  --tracking-label: 0.18em;
+  --tracking-label: 0em;
   --tracking-display: -0.035em;
 
   /* ── shape ────────────────────────────────────────────

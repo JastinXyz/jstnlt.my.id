@@ -16,7 +16,7 @@ const ThemeSwitch = ({ iconSize = 16 }) => {
 
   // Reserve the row's width before hydration so the masthead doesn't reflow.
   if (!mounted) {
-    return <span aria-hidden='true' className='label invisible flex items-center gap-2'><IconSun size={iconSize} /><span className='hidden sm:inline'>light</span></span>
+    return <span aria-hidden='true' className='label invisible flex items-center gap-2'><IconSun size={iconSize} /><span className='hidden sm:inline'>Light</span></span>
   }
 
   const toggle = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -67,7 +67,7 @@ const ThemeSwitch = ({ iconSize = 16 }) => {
       aria-label={resolvedTheme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
     >
       {resolvedTheme === 'dark' ? <IconMoonStars size={iconSize} /> : <IconSun size={iconSize} />}
-      <span className='hidden sm:inline'>{resolvedTheme === 'dark' ? 'dark' : 'light'}</span>
+      <span className='hidden sm:inline'>{resolvedTheme === 'dark' ? 'Dark' : 'Light'}</span>
     </button>
   )
 }
