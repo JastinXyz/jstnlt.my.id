@@ -14,6 +14,18 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "avatars.githubusercontent.com" },
     ],
   },
+
+  /* The old domain answers with a permanent redirect so links and search
+   * ranking carry over. Matched on the exact host: fana. and s3. under the old
+   * domain are separate deployments and must not be caught here. */
+  async redirects() {
+    return ["jstnlt.my.id", "www.jstnlt.my.id"].map((host) => ({
+      source: "/:path*",
+      has: [{ type: "host" as const, value: host }],
+      destination: "https://jstnlt.id/:path*",
+      permanent: true,
+    }));
+  },
 };
 
 export default nextConfig;

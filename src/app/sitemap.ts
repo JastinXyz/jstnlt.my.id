@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 
-const SITE = "https://jstnlt.my.id";
+const SITE = "https://jstnlt.id";
 
 /* Four pages, so this is written out rather than generated. The home page is
  * the only one that changes on its own, because it reads GitHub hourly. */

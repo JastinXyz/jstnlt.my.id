@@ -6,7 +6,7 @@ import { MetadataRoute } from "next";
 export default function robots(): MetadataRoute.Robots {
     return {
         rules: { userAgent: "*", allow: "/", disallow: "/api/" },
-        sitemap: "https://jstnlt.my.id/sitemap.xml",
-        host: "https://jstnlt.my.id",
+        sitemap: "https://jstnlt.id/sitemap.xml",
+        host: "https://jstnlt.id",
     };
 }

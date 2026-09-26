@@ -1,4 +1,4 @@
-# jstnlt.my.id
+# jstnlt.id
 
 Personal site for Jastin Linggar Tama. Next.js 15.2 (App Router) · React 19 · Tailwind v4 · TypeScript.
 

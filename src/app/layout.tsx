@@ -7,7 +7,7 @@ import { getSession } from "@/lib/auth";
 import { Metadata, Viewport } from "next";
 import { ThemeProvider } from "next-themes";
 
-const SITE = "https://jstnlt.my.id";
+const SITE = "https://jstnlt.id";
 const description =
   "Jastin Linggar Tama, fullstack developer in Purwokerto, Indonesia. Go, TypeScript and PHP across school and finance systems, plus open source other people run.";
 
@@ -21,14 +21,14 @@ export const metadata: Metadata = {
     template: "%s / jstnlt",
   },
   description,
-  applicationName: "jstnlt.my.id",
+  applicationName: "jstnlt.id",
   authors: [{ name: "Jastin Linggar Tama", url: SITE }],
   creator: "Jastin Linggar Tama",
   publisher: "Jastin Linggar Tama",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
-    siteName: "jstnlt.my.id",
+    siteName: "jstnlt.id",
     locale: "en_GB",
     title: "Jastin Linggar Tama, fullstack developer",
     description,

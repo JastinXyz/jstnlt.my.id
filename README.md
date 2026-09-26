@@ -1,4 +1,4 @@
-# jstnlt.my.id
+# jstnlt.id
 
 My personal site. Next.js 15 on the App Router, React 19, Tailwind v4, TypeScript.
 
