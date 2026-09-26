@@ -1,5 +1,5 @@
 {
-  "name": "jstnlt.my.id",
+  "name": "jstnlt.id",
   "version": "0.1.0",
   "private": true,
   "description": "Personal site of Jastin Linggar Tama. Next.js, Tailwind, and a drawn character that lives in the hero.",
@@ -8,7 +8,7 @@
   "homepage": "https://jstnlt.id",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JastinXyz/jstnlt.my.id"
+    "url": "https://github.com/JastinXyz/jstnlt.id"
   },
   "scripts": {
     "dev": "next dev",
