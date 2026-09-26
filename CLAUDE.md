@@ -192,7 +192,8 @@ Flagged to the user, deliberately left alone:
 
 Project imagery is GitHub's own per-repo social card (`opengraph.githubassets.com/1/owner/name`):
 real, free, always current. It is not a substitute for screenshots of the live products
-(`whatscode`, `fana`, `s3-explorer`, `v1`, `quran`, the Discord landing page all still resolve).
+(`whatscode`, `s3-explorer`, `v1`, `quran`, the Discord landing page all still resolve).
+`fana.jstnlt.id` is not a deployment: it is a Cloudflare redirect to the GitHub repo.
 If the user supplies screenshots, wire them in ahead of the OG cards.
 
 ---
